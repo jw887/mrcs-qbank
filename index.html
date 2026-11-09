@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MRCS QBank</title>
+<meta name="theme-color" content="#4a5a72"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MRCS QBank"><meta name="robots" content="noindex,nofollow">
+<style>
+:root{--bg:#f4f2ee;--card:#fff;--ink:#1f2733;--mute:#6b7280;--line:#e5e1da;--navy:#4a5a72;--navy2:#3b485c;
+--red:#e0675f;--acc:#3f6aa8;--accs:#e7eef8;--opt:#efe9e5;--sel:#dde2ec;--ok:#6fbf73;--okd:#2f8a4c;--oks:#e8f5ea;
+--bad:#c0392b;--bads:#fbeaea;--flag:#e08a1e;--hl:#fff176}
+@media (prefers-color-scheme:dark){:root{--bg:#15181d;--card:#1e2229;--ink:#e6e8eb;--mute:#9aa1ab;--line:#2d323b;
+--opt:#262b33;--sel:#2e3a50;--accs:#24324a;--acc:#8fb0e3;--oks:#1c3424;--bads:#3a2221;--okd:#6fd08f;--hl:#8a7a12}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--acc)}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:6px;padding:0 18px;height:54px}
+.top .brand{font-weight:700;font-size:18px;letter-spacing:.2px;margin-right:14px;cursor:pointer;white-space:nowrap}
+.top .brand b{font-weight:800}
+.top nav{display:flex;gap:2px;overflow-x:auto}
+.top nav button{background:none;border:0;color:#dfe5ee;padding:8px 12px;border-radius:6px;font:inherit;font-size:15px;cursor:pointer;white-space:nowrap}
+.top nav button.on,.top nav button:hover{background:rgba(255,255,255,.12);color:#fff}
+main{max-width:980px;margin:0 auto;padding:22px 16px 90px}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 15px}
+.btn:hover{border-color:var(--acc)}.btn:disabled{opacity:.45;cursor:default}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}.btn.go{background:#2bc48a;border-color:#2bc48a;color:#fff}
+.btn.sm{padding:5px 10px;font-size:14px}.btn.ghost{border-color:transparent;background:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--mute);margin:0 0 12px;font-weight:650}
+h1{font-size:24px;margin:0 0 16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.sp{flex:1}
+.mute{color:var(--mute)}.small{font-size:13px}.b{font-weight:650}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.grid4{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kpi .v{font-size:26px;font-weight:750;line-height:1.2}.kpi .l{font-size:13px;color:var(--mute)}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.quick button{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;color:var(--ink)}
+.quick button:hover{border-color:var(--acc)}.quick button b{display:block;font-size:15px}.quick button span{font-size:13px;color:var(--mute)}
+.bar{height:7px;background:var(--line);border-radius:4px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.pl{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--line)}.pl:first-child{border-top:0}
+.pl .n{flex:1;min-width:0}.pl .bar{width:150px}.pl .c{width:96px;text-align:right;font-size:13px;color:var(--mute);white-space:nowrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 13px}
+.seg button:last-child{border-right:0}.seg button.on{background:var(--accs);color:var(--acc);font-weight:650}
+.field{display:flex;gap:14px;align-items:flex-start;margin:0 0 14px}.field>label{width:110px;flex:none;color:var(--mute);font-size:14px;padding-top:7px}
+@media (max-width:620px){.field{flex-direction:column;gap:6px}.field>label{padding:0}}
+input[type=number],input[type=search],textarea{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+input[type=number]{width:90px}textarea{width:100%;min-height:70px;resize:vertical}
+.ch{border-top:1px solid var(--line)}.ch:first-child{border-top:0}
+.chh{display:flex;align-items:center;gap:8px;padding:7px 0}.chh .tw{width:18px;color:var(--mute);cursor:pointer;font-size:12px;text-align:center}
+.chh .nm{flex:1;cursor:pointer}.chh .c{font-size:13px;color:var(--mute);white-space:nowrap}
+.secs{display:none;padding:0 0 6px 52px}.ch.open .secs{display:block}
+.secs label{display:flex;gap:8px;align-items:center;padding:3px 0;cursor:pointer;font-size:15px}.secs label .c{margin-left:auto;font-size:13px;color:var(--mute)}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:1px 7px;border-radius:5px;background:var(--accs);color:var(--acc);margin-left:6px;vertical-align:middle}
+/* ---------- question screen (Pastest look) ---------- */
+.qwrap{display:flex;gap:16px;align-items:flex-start}.qmain{flex:1;min-width:0}
+.qhead{background:var(--navy);color:#fff;border-radius:10px 10px 0 0;padding:16px 22px;display:flex;align-items:center;gap:14px}
+.qhead .logo{font-size:24px;font-weight:300;letter-spacing:-.3px}.qhead .logo b{font-weight:700}
+.qhead .qn{margin-left:auto;font-size:22px;font-weight:500}
+.qprog{height:8px;background:#7a8597;display:flex}.qprog i{background:var(--red);display:block}
+.qbody{background:var(--card);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;padding:22px 24px}
+.qmeta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mute);margin-bottom:14px;flex-wrap:wrap}
+.timer{font-variant-numeric:tabular-nums;font-weight:650;color:var(--ink);font-size:15px}.timer.low{color:var(--bad)}
+.stem{white-space:pre-wrap;margin:0 0 10px;color:#4b5563}@media (prefers-color-scheme:dark){.stem{color:#c7ccd3}}
+.lead{font-weight:700;margin:12px 0 16px;color:var(--ink)}
+mark{background:var(--hl);color:inherit;padding:0 1px;border-radius:2px}
+.opt{display:flex;align-items:stretch;gap:4px;margin:0 0 6px;cursor:pointer;user-select:none}
+.opt .l{width:44px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--opt);color:var(--mute);border-radius:4px 0 0 4px}
+.opt .t{flex:1;background:var(--opt);padding:11px 14px;border-radius:0 4px 4px 0;display:flex;align-items:center;gap:8px}
+.opt .t span{flex:1}.opt .x{opacity:0;border:0;background:none;color:var(--mute);font-size:15px;padding:0 4px}
+.opt:hover .x{opacity:.8}.opt.sel .l,.opt.sel .t{background:var(--sel)}
+.opt.ok .l,.opt.ok .t{background:var(--ok);color:#fff}.opt.bad .l,.opt.bad .t{background:var(--bads);color:var(--bad)}
+.opt.struck .t span{text-decoration:line-through;opacity:.45}
+.opt.ro{cursor:default}
+.qnav{display:flex;gap:8px;margin-top:18px;align-items:center;flex-wrap:wrap}
+.flagbtn.on{color:var(--flag);border-color:var(--flag)}
+.exp{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+.exp h3{font-size:20px;font-weight:500;margin:0 0 12px}
+.exp .eo{margin-bottom:14px}.exp .eo p{margin:8px 0 0;white-space:pre-wrap;font-size:15px;color:#4b5563}
+@media (prefers-color-scheme:dark){.exp .eo p{color:#c7ccd3}}
+.yours{font-size:12px;font-weight:700;margin-left:8px;opacity:.85}
+.verdict{font-weight:700;margin:0 0 14px;font-size:17px}.verdict.ok{color:var(--okd)}.verdict.bad{color:var(--bad)}
+img.orig{max-width:100%;border:1px solid var(--line);border-radius:8px;margin-top:10px;display:block}
+details summary{cursor:pointer;color:var(--mute);font-size:14px}
+.side{width:236px;flex:none;position:sticky;top:70px}
+@media (max-width:860px){.qwrap{flex-direction:column}.side{width:100%;position:static}}
+@media (max-width:620px){main{padding:14px 10px 80px}.qhead{padding:12px 14px}.qhead .logo{font-size:19px}.qhead .qn{font-size:17px}
+ .qbody{padding:16px 14px}.opt .l{width:36px}.opt .t{padding:10px 10px}.card{padding:14px}.top{padding:0 8px}.top .brand{font-size:16px;margin-right:4px}
+ .top nav button{padding:8px 8px;font-size:14px}.pl .bar{width:80px}.kbd{display:none}table{font-size:13px}}
+.mrow{border-top:1px solid var(--line);padding:12px 0;display:flex;gap:12px;align-items:flex-start}.mrow:first-child{border-top:0}
+.mrow .q{flex:1;min-width:0}.mrow .ab{font-size:13px;margin-top:4px}.mrow .ab b.r{color:var(--bad)}.mrow .ab b.g{color:var(--okd)}
+.navgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;max-height:52vh;overflow:auto;padding:2px}
+.navgrid button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:5px 0;font-size:13px;position:relative}
+.navgrid .ans{background:var(--sel)}.navgrid .ok{background:var(--oks);border-color:var(--ok)}.navgrid .bad{background:var(--bads);border-color:var(--bad)}
+.navgrid .cur{outline:2px solid var(--acc);outline-offset:1px}.navgrid .fl::after{content:"";position:absolute;top:2px;right:3px;width:6px;height:6px;border-radius:3px;background:var(--flag)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--mute);margin-top:10px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;border:1px solid var(--line)}
+.paused .qbody>*:not(.pausecover){filter:blur(7px);pointer-events:none}
+.pausecover{display:none}.paused .pausecover{display:flex;position:absolute;inset:0;align-items:center;justify-content:center;z-index:5}
+.qbody{position:relative}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);font-weight:650;cursor:pointer}
+td.n,th.n{text-align:right;white-space:nowrap}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:650}
+.pill.g{background:var(--oks);color:var(--okd)}.pill.a{background:#fdf1dc;color:#9a5b00}.pill.r{background:var(--bads);color:var(--bad)}
+.big{font-size:44px;font-weight:800;line-height:1}
+.kbd{font-size:12px;color:var(--mute);margin-top:12px}
+.empty{color:var(--mute);padding:10px 0}
+svg text{fill:var(--mute);font-size:11px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--navy2);color:#fff;padding:9px 16px;border-radius:8px;font-size:14px;z-index:50}
+</style></head><body>
+<div class="top"><div class="brand" data-act="go" data-v="dash">MRCS <b>QBank</b></div>
+<nav id="nav"></nav></div>
+<main id="app"></main>
+<script src="data-1.js"></script><script src="data-2.js"></script><script src="data-3.js"></script><script>
+"use strict";
+const DB=JSON.parse(window.__QB.join(''));
+// ---------------------------------------------------------------- data
+const T={};DB.topics.forEach(t=>T[t.id]=t);
+const PAPER={1:1,4:1,5:1,8:1,9:1,11:1,12:1,2:2,3:2,6:2,7:2,10:2};   // chapter -> MRCS Part A paper
+const PAPERS={1:'Paper 1 · Applied Basic Sciences',2:'Paper 2 · Principles of Surgery in General'};
+DB.questions.forEach(q=>{q.key=T[q.t].section_no+':'+q.p;q.ch=T[q.t].chapter_no;q.paper=PAPER[q.ch]||1});
+const QK={};DB.questions.forEach(q=>QK[q.key]=q);
+const CH={};DB.topics.forEach(t=>{(CH[t.chapter_no]=CH[t.chapter_no]||{no:t.chapter_no,name:t.chapter,secs:[]}).secs.push(t)});
+// ---------------------------------------------------------------- storage
+const LS='mrcsqbank.v1';
+let P={h:{},f:{},notes:{},sessions:[],cur:null,cfg:null,m:{},exp:0};
+try{Object.assign(P,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
+P.h=P.h||{};P.f=P.f||{};P.notes=P.notes||{};P.sessions=P.sessions||[];P.m=P.m||{};P.exp=P.exp||0;
+let saveT=null;
+function save(now){clearTimeout(saveT);const f=()=>{try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){toast('Could not save progress in this browser')}};now?f():saveT=setTimeout(f,400)}
+const cfg=Object.assign({sel:DB.topics.map(t=>t.id),pool:'new',n:20,mode:'practice',order:'random',timer:'up'},P.cfg||{});
+function saveCfg(){P.cfg=cfg;save()}
+// ---------------------------------------------------------------- helpers
+const $=id=>document.getElementById(id),app=$('app');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
+const pct=(a,b)=>b?Math.round(100*a/b):0;
+const last=k=>{const h=P.h[k];return h&&h.length?h[h.length-1]:null};      // [time, chosen, correct?, secs]
+const day=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+function summary(qs){let a=0,c=0;for(const q of qs){const l=last(q.key);if(l){a++;if(l[2])c++}}return{a,c,t:qs.length}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+function accColor(p){return p>=75?'var(--ok)':p>=55?'#e9a23b':'var(--bad)'}
+function bar(a,c,t){return `<div class="bar" title="${a}/${t} answered, ${pct(c,a)}% correct"><i style="width:${t?100*c/t:0}%;background:var(--ok)"></i><i style="width:${t?100*(a-c)/t:0}%;background:#e8a29c"></i></div>`}
+// ---------------------------------------------------------------- routing
+let view='dash',S=null,tick=null;
+const NAV=[['dash','Dashboard'],['build','New session'],['mistakes','Mistakes'],['history','History'],['perf','Performance'],['flagged','Flagged & notes']];
+function go(v,arg){if(S&&v!=='quiz'){pauseClock()}view=v;stopTick();
+  $('nav').innerHTML=NAV.map(([k,l])=>`<button class="${k===v?'on':''}" data-act="go" data-v="${k}">${l}</button>`).join('');
+  ({dash,build,mistakes,history,perf,flagged,quiz,results})[v](arg);scrollTo(0,0)}
+// ---------------------------------------------------------------- dashboard
+function streak(){const ds=new Set(Object.values(P.h).flat().map(x=>day(x[0])));let n=0,d=new Date();
+  if(!ds.has(day(d)))d.setDate(d.getDate()-1);while(ds.has(day(d))){n++;d.setDate(d.getDate()-1)}return n}
+function dash(){
+  const all=summary(DB.questions),today=day(Date.now());
+  let tdN=0,tdC=0,tsec=0,tn=0;Object.values(P.h).forEach(h=>h.forEach(x=>{if(day(x[0])===today){tdN++;tdC+=x[2]}if(x[3]){tsec+=x[3];tn++}}));
+  const wrong=DB.questions.filter(q=>{const l=last(q.key);return l&&!l[2]}).length,flagged=Object.keys(P.f).length;
+  const cur=P.sessions.find(s=>s.id===P.cur&&!s.done);
+  let h=`<h1>Dashboard</h1><div class="grid4" style="margin-bottom:16px">
+   <div class="kpi"><div class="v">${all.a}<span class="mute" style="font-size:15px;font-weight:500"> / ${all.t}</span></div><div class="l">questions answered</div><div class="bar" style="margin-top:8px"><i style="width:${pct(all.a,all.t)}%;background:var(--acc)"></i></div></div>
+   <div class="kpi"><div class="v" style="color:${all.a?accColor(pct(all.c,all.a)):'inherit'}">${all.a?pct(all.c,all.a)+'%':'–'}</div><div class="l">correct (latest attempt)</div></div>
+   <div class="kpi"><div class="v">${tdN}</div><div class="l">today${tdN?' · '+pct(tdC,tdN)+'% correct':''}</div></div>
+   <div class="kpi"><div class="v">${streak()}</div><div class="l">day streak${tn?' · '+Math.round(tsec/tn)+' s / question':''}</div></div></div>`;
+  if(cur){const n=cur.qs.length,a=Object.keys(cur.ans).length;
+    h+=`<div class="card row"><div><div class="b">Unfinished ${cur.mode==='exam'?'exam':'session'}: ${esc(cur.name)}</div><div class="mute small">${a}/${n} answered · started ${new Date(cur.start).toLocaleString()}</div></div><span class="sp"></span>
+    <button class="btn" data-act="discard">Discard</button><button class="btn go" data-act="resume">Resume</button></div>`}
+  h+=`<div class="card"><h2>Quick start</h2><div class="quick">
+   <button data-act="quick" data-k="new10"><b>10 new questions</b><span>Random unanswered, practice mode</span></button>
+   <button data-act="quick" data-k="wrong" ${wrong?'':'disabled'}><b>Revise my mistakes</b><span>${wrong} answered wrong last time</span></button>
+   <button data-act="quick" data-k="flag" ${flagged?'':'disabled'}><b>Flagged questions</b><span>${flagged} flagged</span></button>
+   <button data-act="quick" data-k="mini"><b>Mini mock · 60 Q</b><span>Mixed papers, 60 min, exam mode</span></button>
+   <button data-act="quick" data-k="p1"><b>Mock Paper 1 · 180 Q</b><span>Applied Basic Sciences, 3 h</span></button>
+   <button data-act="quick" data-k="p2"><b>Mock Paper 2 · 120 Q</b><span>Principles of Surgery in General, 2 h</span></button>
+  </div></div><div class="grid2">`;
+  for(const pp of [1,2]){h+=`<div class="card"><h2>${PAPERS[pp]}</h2>`;
+    Object.values(CH).filter(c=>(PAPER[c.no]||1)===pp).forEach(c=>{const s=summary(DB.questions.filter(q=>q.ch===c.no));
+      h+=`<div class="pl"><div class="n"><div class="small b">${c.no}. ${esc(c.name)}</div></div>${bar(s.a,s.c,s.t)}<div class="c">${s.a}/${s.t}${s.a?' · '+pct(s.c,s.a)+'%':''}</div></div>`});
+    h+='</div>'}
+  app.innerHTML=h+'</div><p class="mute small">Bars: green = correct, pink = wrong, grey = not yet answered.</p>';
+}
+// ---------------------------------------------------------------- session builder
+function poolOf(c){const sel=new Set(c.sel);return DB.questions.filter(q=>sel.has(q.t)).filter(q=>{const l=last(q.key);
+  return c.pool==='all'||(c.pool==='new'&&!l)||(c.pool==='wrong'&&l&&!l[2])||(c.pool==='flag'&&P.f[q.key])})}
+function seg(k,opts){return `<span class="seg">`+opts.map(([v,l])=>`<button class="${String(cfg[k])===String(v)?'on':''}" data-act="cfg" data-k="${k}" data-val="${v}">${l}</button>`).join('')+`</span>`}
+const openCh=new Set();
+function build(){
+  const sel=new Set(cfg.sel);
+  let h=`<h1>New session</h1><div class="card"><h2>Topics</h2><div class="row small" style="margin-bottom:10px">
+    <button class="btn sm" data-act="selp" data-p="0">All</button><button class="btn sm" data-act="selp" data-p="1">Paper 1 only</button>
+    <button class="btn sm" data-act="selp" data-p="2">Paper 2 only</button><button class="btn sm" data-act="selp" data-p="-1">Clear</button></div>`;
+  Object.values(CH).forEach(c=>{const on=c.secs.filter(t=>sel.has(t.id)).length,qs=DB.questions.filter(q=>q.ch===c.no),s=summary(qs);
+    h+=`<div class="ch ${openCh.has(c.no)?'open':''}" id="ch${c.no}"><div class="chh"><span class="tw" data-act="tog" data-c="${c.no}">${openCh.has(c.no)?'▼':'▶'}</span>
+    <input type="checkbox" data-act="selch" data-c="${c.no}" ${on===c.secs.length?'checked':''} ${on&&on<c.secs.length?'data-ind="1"':''}>
+    <span class="nm" data-act="tog" data-c="${c.no}">${c.no}. ${esc(c.name)}<span class="tag">P${PAPER[c.no]||1}</span></span><span class="c">${s.a}/${s.t}</span></div><div class="secs">`+
+    c.secs.map(t=>{const m=summary(qs.filter(q=>q.t===t.id));return `<label><input type="checkbox" data-act="selsec" data-t="${t.id}" ${sel.has(t.id)?'checked':''}> ${t.section_no} ${esc(t.section)}<span class="c">${m.a}/${m.t}${m.a?' · '+pct(m.c,m.a)+'%':''}</span></label>`}).join('')+`</div></div>`});
+  h+=`</div><div class="card"><h2>Settings</h2>
+   <div class="field"><label>Questions</label>${seg('pool',[['new','Unanswered'],['wrong','Answered wrong'],['flag','Flagged'],['all','All']])}</div>
+   <div class="field"><label>How many</label><div class="row"><input type="number" id="nq" min="1" value="${cfg.n||''}" placeholder="all"> ${seg('n',[[10,'10'],[20,'20'],[50,'50'],[100,'100'],[0,'All']])}</div></div>
+   <div class="field"><label>Mode</label><div>${seg('mode',[['practice','Practice'],['exam','Timed exam']])}
+     <div class="mute small" style="margin-top:6px">${cfg.mode==='exam'?'Exam conditions: 1 minute per question, answers and explanations shown at the end.':'Answer shown with explanations after each question.'}</div></div></div>
+   ${cfg.mode==='practice'?`<div class="field"><label>Timer</label>${seg('timer',[['up','Stopwatch'],['q60','60 s per question'],['off','Off']])}</div>`:''}
+   <div class="field"><label>Order</label>${seg('order',[['random','Random'],['seq','In book order']])}</div>
+   <div class="field"><label>Search</label><div style="flex:1"><input type="search" id="kw" style="width:100%" placeholder="Optional keywords, e.g. pyloric stenosis" value="${esc(cfg.kw||'')}"><div class="mute small" style="margin-top:4px">Only questions containing all the words (in the question, options or explanations).</div></div></div>
+   <div class="row" style="margin-top:6px"><button class="btn go" id="startbtn" data-act="start">Start</button><span class="mute" id="avail"></span></div></div>`;
+  app.innerHTML=h;
+  document.querySelectorAll('[data-ind]').forEach(x=>x.indeterminate=true);
+  $('nq').addEventListener('input',e=>{cfg.n=parseInt(e.target.value)||0;saveCfg();availCount()});
+  $('kw').addEventListener('input',e=>{cfg.kw=e.target.value;saveCfg();availCount()});
+  availCount();
+}
+function kwFilter(qs){const w=(cfg.kw||'').toLowerCase().split(/\s+/).filter(Boolean);if(!w.length)return qs;
+  return qs.filter(q=>{const s=(q.stem+' '+q.opts.map(o=>o.x+' '+o.e).join(' ')+' '+q.gen).toLowerCase();return w.every(x=>s.includes(x))})}
+function availCount(){const n=kwFilter(poolOf(cfg)).length;const take=cfg.n?Math.min(cfg.n,n):n;
+  $('avail').textContent=`${n} available · session of ${take}${cfg.mode==='exam'?' · '+take+' min':''}`;$('startbtn').disabled=!take}
+// ---------------------------------------------------------------- sessions
+function newSession(keys,o){
+  const s={id:Date.now().toString(36),name:o.name,mode:o.mode,timer:o.timer||'up',start:Date.now(),qs:keys,i:0,ans:{},sub:{},times:{},
+    st:{},hl:{},elapsed:0,limit:o.limit||0,done:false};
+  P.sessions.push(s);P.cur=s.id;
+  if(P.sessions.length>200)P.sessions=P.sessions.slice(-200);
+  save(true);S=s;go('quiz')}
+function startFromCfg(){let qs=kwFilter(poolOf(cfg));if(cfg.order==='random')shuffle(qs);else qs.sort((a,b)=>a.key<b.key?-1:1);
+  if(cfg.n)qs=qs.slice(0,cfg.n);if(!qs.length)return;
+  const secs=[...new Set(qs.map(q=>q.t))],nm=secs.length===1?T[secs[0]].section:secs.length<=3?secs.map(t=>T[t].section).join(', '):`${qs.length} questions, ${new Set(qs.map(q=>q.ch)).size} chapters`;
+  newSession(qs.map(q=>q.key),{name:(cfg.kw?'"'+cfg.kw+'" · ':'')+nm,mode:cfg.mode,timer:cfg.timer,limit:cfg.mode==='exam'?qs.length*60:0})}
+function quick(k){
+  const pick=(f,n)=>{let qs=shuffle(DB.questions.filter(f));return n?qs.slice(0,n):qs};
+  const unans=q=>!last(q.key);
+  // mocks prefer unanswered questions, topping up with answered ones if needed
+  const mock=(f,n)=>{let a=pick(q=>f(q)&&unans(q)),b=pick(q=>f(q)&&!unans(q));return shuffle(a.concat(b).slice(0,n))};
+  let qs,o;
+  if(k==='new10'){qs=pick(unans,10);o={name:'10 new questions',mode:'practice'}}
+  else if(k==='wrong'){qs=pick(q=>{const l=last(q.key);return l&&!l[2]});o={name:'Revise my mistakes',mode:'practice'}}
+  else if(k==='flag'){qs=pick(q=>P.f[q.key]);o={name:'Flagged questions',mode:'practice'}}
+  else if(k==='mini'){qs=mock(()=>true,60);o={name:'Mini mock (60 Q)',mode:'exam',limit:3600}}
+  else if(k==='p1'){qs=mock(q=>q.paper===1,180);o={name:'Mock Paper 1 · Applied Basic Sciences',mode:'exam',limit:3*3600}}
+  else if(k==='p2'){qs=mock(q=>q.paper===2,120);o={name:'Mock Paper 2 · Principles of Surgery in General',mode:'exam',limit:2*3600}}
+  if(!qs||!qs.length){toast('No questions for that yet');return}
+  newSession(qs.map(q=>q.key),o)}
+// ---------------------------------------------------------------- clock
+let lastTick=0;
+function startTick(){stopTick();lastTick=Date.now();tick=setInterval(onTick,1000)}
+function stopTick(){if(tick)clearInterval(tick);tick=null}
+function pauseClock(){stopTick();if(S)save(true)}
+function onTick(){if(!S||S.paused)return;const now=Date.now(),dt=(now-lastTick)/1000;lastTick=now;
+  S.elapsed+=dt;const k=S.qs[S.i];if(!S.sub[k])S.times[k]=(S.times[k]||0)+dt;
+  paintClock();save();
+  if(S.mode==='exam'&&S.limit&&S.elapsed>=S.limit){toast('Time is up');finish()}
+  if(S.mode==='practice'&&S.timer==='q60'&&!S.sub[k]&&(S.times[k]||0)>=60&&!S._warned){S._warned=k;toast('60 seconds — time to commit to an answer')}}
+function paintClock(){const el=$('clock');if(!el)return;const k=S.qs[S.i];
+  if(S.mode==='exam'){const left=S.limit-S.elapsed;el.textContent='⏱ '+fmt(left)+' left';el.className='timer'+(left<300?' low':'')}
+  else if(S.timer==='q60'){const left=60-(S.times[k]||0);el.textContent='⏱ '+fmt(Math.max(0,left));el.className='timer'+(left<=10?' low':'')}
+  else if(S.timer==='up'){el.textContent='⏱ '+fmt(S.times[k]||0)+' · total '+fmt(S.elapsed)}else el.textContent=''}
+// ---------------------------------------------------------------- question screen
+function resume(){S=P.sessions.find(s=>s.id===P.cur&&!s.done);if(S)go('quiz')}
+function quiz(){
+  if(!S){go('dash');return}
+  const k=S.qs[S.i],q=QK[k];if(!q){S.i=0;return go('quiz')}
+  const n=S.qs.length,review=S.done,t=T[q.t],chosen=S.ans[k],shown=review||(S.mode==='practice'&&S.sub[k]),st=S.st[k]||{};
+  const lead=q.lead&&q.stem.trim().endsWith(q.lead)?q.lead:'';
+  const stemTxt=lead?q.stem.slice(0,q.stem.lastIndexOf(lead)).trim():q.stem;
+  let h=`<div class="qwrap"><div class="qmain ${S.paused?'paused':''}" id="qmain">
+   <div class="qhead"><div class="logo">MRCS <b>QBank</b></div><div class="qn">Question ${S.i+1} of ${n}</div></div>
+   <div class="qprog"><i style="width:${100*(S.i+1)/n}%"></i></div>
+   <div class="qbody"><div class="pausecover"><div style="text-align:center"><div class="b" style="font-size:20px;margin-bottom:10px">Paused</div><button class="btn go" data-act="pause">Resume</button></div></div>
+   <div class="qmeta"><span>${t.section_no} ${esc(t.section)}</span><span class="sp"></span><span class="timer" id="clock"></span>
+     ${review?'':`<button class="btn sm ghost" data-act="pause" title="Pause (P)">⏸</button>`}</div>
+   <p class="stem" id="stem">${S.hl[k]||esc(stemTxt)}</p>${lead?`<p class="lead">${esc(lead)}</p>`:''}`;
+  q.opts.forEach(o=>{let c='';if(shown){if(o.l===q.ans)c='ok';else if(o.l===chosen)c='bad'}else if(o.l===chosen)c='sel';if(st[o.l])c+=' struck';if(shown)c+=' ro';
+    h+=`<div class="opt ${c}" data-act="pick" data-l="${o.l}"><div class="l">${o.l}</div><div class="t"><span>${esc(o.x)}</span>${shown?(o.l===chosen?'<span class="yours">your answer</span>':''):`<button class="x" data-act="strike" data-l="${o.l}" title="Cross out (right-click)">✕</button>`}</div></div>`});
+  if(q.img){const pics=q.img.startsWith('data:')?q.img.split('|'):q.img.split(';');const auto=q.img.startsWith('data:')||/\b(shown|below|image|radiograph|x-ray|scan|photograph|figure|picture|film|ct|mri)\b/i.test(q.stem);
+    h+=`<details ${auto?'open':''} style="margin-top:12px"><summary>${q.img.startsWith('data:')?'Image':'Original page'}${pics.length>1?'s':''} (${pics.length})</summary>${pics.map(s=>`<img class="orig" loading="lazy" src="${esc(s)}">`).join('')}</details>`}
+  h+=`<div class="qnav"><button class="btn" data-act="mv" data-d="-1" ${S.i?'':'disabled'}>← Previous</button>
+     <button class="btn flagbtn ${P.f[k]?'on':''}" data-act="flag">⚑ ${P.f[k]?'Flagged':'Flag'}</button>
+     ${S.hl[k]?'<button class="btn sm ghost" data-act="clearhl">Clear highlights</button>':''}<span class="sp"></span>`;
+  if(review){h+=`${S.i<n-1?'<button class="btn pri" data-act="mv" data-d="1">Next →</button>':''}<button class="btn" data-act="toresults">Back to results</button>`}
+  else if(S.mode==='practice'&&!S.sub[k]){h+=`<button class="btn pri" data-act="submit" ${chosen?'':'disabled'}>Submit answer</button>`}
+  else{h+=S.i<n-1?`<button class="btn ${S.mode==='exam'?'':'pri'}" data-act="mv" data-d="1">${S.mode==='exam'?'Next →':'Next question →'}</button>`:''}
+  if(!review)h+=`<button class="btn ${S.i===n-1?'pri':''}" data-act="endask">${S.mode==='exam'?'End exam':'Finish'}</button>`;
+  h+='</div>';
+  if(shown){const ok=chosen===q.ans;
+    h+=`<div class="exp"><h3>Explanation</h3>${chosen?`<div class="verdict ${ok?'ok':'bad'}">${ok?'Correct':'Incorrect'} — the answer is ${q.ans}${S.times[k]?` <span class="mute small" style="font-weight:400">· ${fmt(S.times[k])} on this question</span>`:''}</div>`:`<div class="verdict bad">Not answered — the answer is ${q.ans}</div>`}`;
+    const order=[q.opts.find(o=>o.l===q.ans),...q.opts.filter(o=>o.l!==q.ans)].filter(Boolean);
+    order.forEach(o=>{h+=`<div class="eo"><div class="opt ro ${o.l===q.ans?'ok':''}"><div class="l">${o.l}</div><div class="t"><span>${esc(o.x)}</span></div></div>${o.e?`<p>${esc(o.e)}</p>`:''}</div>`});
+    if(q.gen)h+=`<p class="stem" style="font-size:15px">${esc(q.gen)}</p>`;
+    h+=`<div style="margin-top:14px"><div class="mute small" style="margin-bottom:4px">My notes</div><textarea id="note" placeholder="Anything to remember about this question…">${esc(P.notes[k]||'')}</textarea></div></div>`}
+  h+=`</div></div><div class="side"><div class="card"><div class="row" style="margin-bottom:10px"><b>${esc(S.name)}</b></div>
+    <div class="mute small" style="margin-bottom:10px">${S.mode==='exam'?'Timed exam':'Practice'} · ${Object.keys(S.ans).length}/${n} answered${review?' · review':''}</div>
+    <div class="navgrid">${S.qs.map((x,i)=>{let c='';if(review||(S.mode==='practice'&&S.sub[x]))c=S.ans[x]?(S.ans[x]===QK[x].ans?'ok':'bad'):'';else if(S.ans[x])c='ans';
+      return `<button class="${c} ${i===S.i?'cur':''} ${P.f[x]?'fl':''}" data-act="jump" data-i="${i}">${i+1}</button>`}).join('')}</div>
+    <div class="legend"><span><i style="background:var(--sel)"></i>answered</span><span><i style="background:var(--oks);border-color:var(--ok)"></i>right</span><span><i style="background:var(--bads);border-color:var(--bad)"></i>wrong</span><span><i style="background:var(--flag);border-radius:5px"></i>flagged</span></div>
+    </div><div class="kbd">Keys: A–E choose · Enter submit / next · ← → move · F flag · P pause · right-click an option to cross it out · select text in the question to highlight it</div></div></div>`;
+  app.innerHTML=h;
+  if(!review){startTick();paintClock()}else{$('clock').textContent=S.elapsed?'Total time '+fmt(S.elapsed):''}
+  const note=$('note');if(note)note.addEventListener('input',()=>{const v=note.value.trim();if(v)P.notes[k]=note.value;else delete P.notes[k];save()});
+  $('stem').addEventListener('mouseup',highlight);
+  document.querySelectorAll('.opt[data-l]').forEach(el=>el.addEventListener('contextmenu',e=>{e.preventDefault();strike(el.dataset.l)}));
+}
+function highlight(){const sel=window.getSelection();if(!sel||sel.isCollapsed)return;const r=sel.getRangeAt(0),stem=$('stem');
+  if(!stem.contains(r.commonAncestorContainer))return;
+  try{const m=document.createElement('mark');m.appendChild(r.extractContents());r.insertNode(m);sel.removeAllRanges();
+    S.hl[S.qs[S.i]]=stem.innerHTML;save();quiz()}catch(e){}}
+function pick(l){const k=S.qs[S.i];if(S.done||(S.mode==='practice'&&S.sub[k]))return;S.ans[k]=l;save();quiz()}
+function strike(l){const k=S.qs[S.i];if(S.done)return;S.st[k]=S.st[k]||{};S.st[k][l]=!S.st[k][l];save();quiz()}
+function record(k,secs){const c=S.ans[k];if(!c)return;(P.h[k]=P.h[k]||[]).push([Date.now(),c,c===QK[k].ans?1:0,Math.round(secs||0)])}
+function submit(){const k=S.qs[S.i];if(!S.ans[k]||S.sub[k])return;S.sub[k]=1;record(k,S.times[k]);save(true);quiz()}
+function mv(d){S.i=Math.min(Math.max(S.i+d,0),S.qs.length-1);S._warned=null;save();quiz()}
+function flag(){const k=S.qs[S.i];if(P.f[k])delete P.f[k];else P.f[k]=1;save();quiz()}
+function endAsk(){const left=S.qs.filter(k=>!S.ans[k]).length;
+  if(left&&!confirm(`${left} question${left>1?'s are':' is'} unanswered. ${S.mode==='exam'?'End the exam now?':'Finish now?'}`))return;finish()}
+function finish(){stopTick();if(S.mode==='exam')S.qs.forEach(k=>{if(!S.sub[k]){S.sub[k]=1;record(k,S.times[k])}});
+  S.done=true;S.end=Date.now();if(P.cur===S.id)P.cur=null;save(true);go('results',S.id)}
+// ---------------------------------------------------------------- results
+function results(id){
+  const s=P.sessions.find(x=>x.id===id)||S;if(!s){go('dash');return}S=s;
+  const n=s.qs.length,ans=s.qs.filter(k=>s.ans[k]).length,ok=s.qs.filter(k=>s.ans[k]===QK[k]?.ans).length,p=pct(ok,n);
+  const per={};s.qs.forEach(k=>{const q=QK[k];if(!q)return;const x=per[q.t]=per[q.t]||[0,0,0];x[1]++;if(s.ans[k]===q.ans)x[0]++;x[2]+=s.times[k]||0});
+  let h=`<h1>${esc(s.name)}</h1><div class="grid4" style="margin-bottom:16px">
+   <div class="kpi"><div class="v big" style="color:${accColor(p)}">${p}%</div><div class="l">${ok} of ${n} correct</div></div>
+   <div class="kpi"><div class="v">${ans}/${n}</div><div class="l">answered</div></div>
+   <div class="kpi"><div class="v">${fmt(s.elapsed)}</div><div class="l">time${s.limit?' of '+fmt(s.limit):''}</div></div>
+   <div class="kpi"><div class="v">${ans?Math.round(s.qs.reduce((a,k)=>a+(s.times[k]||0),0)/Math.max(ans,1)):0} s</div><div class="l">per question</div></div></div>
+   <div class="card"><h2>Review questions</h2><div class="navgrid" style="grid-template-columns:repeat(auto-fill,minmax(40px,1fr));max-height:none">${s.qs.map((k,i)=>`<button class="${!s.ans[k]?'':s.ans[k]===QK[k]?.ans?'ok':'bad'} ${P.f[k]?'fl':''}" data-act="rev" data-i="${i}">${i+1}</button>`).join('')}</div>
+   <div class="row" style="margin-top:14px"><button class="btn pri" data-act="rev" data-i="0">Review all</button>
+   <button class="btn" data-act="retry" ${ok===n?'disabled':''}>Retry the ${n-ok} I got wrong / skipped</button><span class="sp"></span><button class="btn" data-act="go" data-v="dash">Dashboard</button></div></div>
+   <div class="card"><h2>By section</h2><table><tr><th>Section</th><th class="n">Score</th><th class="n">Time / Q</th></tr>${Object.entries(per).sort((a,b)=>a[1][0]/a[1][1]-b[1][0]/b[1][1]).map(([t,[a,b,tm]])=>`<tr><td>${T[t].section_no} ${esc(T[t].section)}</td><td class="n"><span class="pill ${a/b>=.75?'g':a/b>=.55?'a':'r'}">${a}/${b}</span></td><td class="n">${Math.round(tm/b)} s</td></tr>`).join('')}</table></div>`;
+  app.innerHTML=h}
+// ---------------------------------------------------------------- history
+function history(){
+  const ss=[...P.sessions].reverse();
+  let h=`<h1>History</h1><div class="card">`;
+  if(!ss.length)h+='<div class="empty">No sessions yet — start one from the dashboard.</div>';
+  else h+=`<table><tr><th>Date</th><th>Session</th><th class="n">Questions</th><th class="n">Score</th><th class="n">Time</th><th></th></tr>`+ss.map(s=>{const n=s.qs.length,ok=s.qs.filter(k=>s.ans[k]===QK[k]?.ans).length,a=Object.keys(s.ans).length;
+    return `<tr><td class="small">${new Date(s.start).toLocaleDateString()}<br><span class="mute">${new Date(s.start).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span></td>
+    <td>${esc(s.name)}<br><span class="mute small">${s.mode==='exam'?'Timed exam':'Practice'}${s.done?'':' · unfinished'}</span></td><td class="n">${a}/${n}</td>
+    <td class="n">${s.done?`<span class="pill ${ok/n>=.75?'g':ok/n>=.55?'a':'r'}">${pct(ok,n)}%</span>`:'–'}</td><td class="n">${fmt(s.elapsed)}</td>
+    <td class="n">${s.done?`<button class="btn sm" data-act="openres" data-id="${s.id}">Results</button>`:`<button class="btn sm go" data-act="resumeid" data-id="${s.id}">Resume</button>`} <button class="btn sm ghost" data-act="delsess" data-id="${s.id}" title="Delete">✕</button></td></tr>`}).join('')+'</table>';
+  app.innerHTML=h+'</div>'}
+// ---------------------------------------------------------------- performance
+let perfSort='acc';
+function perf(){
+  const days={};Object.values(P.h).flat().forEach(([ts,,c])=>{const d=day(ts);const x=days[d]=days[d]||[0,0];x[0]++;x[1]+=c});
+  const N=30,list=[];for(let i=N-1;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=day(d);list.push([k,...(days[k]||[0,0])])}
+  const mx=Math.max(10,...list.map(x=>x[1])),W=900,H=170,bw=W/N;
+  let svg=`<svg viewBox="0 0 ${W} ${H+24}" width="100%" role="img" aria-label="Questions per day, last 30 days">`;
+  list.forEach(([d,n,c],i)=>{const hh=H*n/mx,hc=H*c/mx;svg+=`<rect x="${i*bw+3}" y="${H-hh}" width="${bw-6}" height="${hh}" fill="#e8a29c" rx="2"><title>${d}: ${n} questions, ${pct(c,n)}% correct</title></rect><rect x="${i*bw+3}" y="${H-hc}" width="${bw-6}" height="${hc}" fill="var(--ok)" rx="2"><title>${d}: ${n} questions, ${pct(c,n)}% correct</title></rect>`;
+    if(i%5===0||i===N-1)svg+=`<text x="${i*bw+bw/2}" y="${H+16}" text-anchor="middle">${d.slice(5)}</text>`});
+  svg+=`<text x="2" y="12">${mx}</text></svg>`;
+  const rows=DB.topics.map(t=>{const qs=DB.questions.filter(q=>q.t===t.id),m=summary(qs);let ts=0,tn=0;qs.forEach(q=>(P.h[q.key]||[]).forEach(x=>{if(x[3]){ts+=x[3];tn++}}));return{t,m,p:m.a?m.c/m.a:-1,tq:tn?ts/tn:0}});
+  const srt={acc:(a,b)=>(a.m.a<3)-(b.m.a<3)||a.p-b.p,sec:(a,b)=>a.t.section_no<b.t.section_no?-1:1,done:(a,b)=>b.m.a/b.m.t-a.m.a/a.m.t,time:(a,b)=>b.tq-a.tq}[perfSort];
+  const all=summary(DB.questions);
+  let h=`<h1>Performance</h1><div class="grid4" style="margin-bottom:16px">${[1,2].map(pp=>{const s=summary(DB.questions.filter(q=>q.paper===pp));return `<div class="kpi"><div class="v" style="color:${s.a?accColor(pct(s.c,s.a)):'inherit'}">${s.a?pct(s.c,s.a)+'%':'–'}</div><div class="l">Paper ${pp} · ${s.a}/${s.t} done</div></div>`}).join('')}
+    <div class="kpi"><div class="v">${Object.values(P.h).reduce((a,h)=>a+h.length,0)}</div><div class="l">total attempts</div></div>
+    <div class="kpi"><div class="v">${P.sessions.filter(s=>s.done).length}</div><div class="l">sessions completed</div></div></div>
+  <div class="card"><h2>Last 30 days</h2>${svg}<div class="legend"><span><i style="background:var(--ok)"></i>correct</span><span><i style="background:#e8a29c"></i>wrong</span></div></div>
+  <div class="card"><h2>By section</h2><div class="mute small" style="margin-bottom:8px">Sorted by ${({acc:'weakest first (min. 3 answered)',sec:'section',done:'most complete',time:'slowest'})[perfSort]} — click a heading to sort.</div>
+  <table><tr><th data-act="psort" data-s="sec">Section</th><th class="n" data-act="psort" data-s="done">Done</th><th class="n" data-act="psort" data-s="acc">Correct</th><th class="n" data-act="psort" data-s="time">Time / Q</th><th></th></tr>
+  ${rows.sort(srt).map(r=>`<tr><td>${r.t.section_no} ${esc(r.t.section)}</td><td class="n">${r.m.a}/${r.m.t}</td><td class="n">${r.m.a?`<span class="pill ${r.p>=.75?'g':r.p>=.55?'a':'r'}">${pct(r.m.c,r.m.a)}%</span>`:'–'}</td><td class="n">${r.tq?Math.round(r.tq)+' s':'–'}</td><td class="n"><button class="btn sm" data-act="drill" data-t="${r.t.id}">Practise</button></td></tr>`).join('')}</table></div>
+  <div class="card"><h2>Your data</h2><p class="mute small" style="margin-top:0">Progress is saved in this browser only. Export it to back it up or to move it to another browser or computer.</p>
+  <div class="row"><button class="btn" data-act="export">Export progress</button><button class="btn" data-act="import">Import progress</button><input type="file" id="impf" accept=".json" style="display:none">
+  <span class="sp"></span><button class="btn" data-act="reset" style="color:var(--bad)">Reset everything</button></div></div>`;
+  app.innerHTML=h;
+  $('impf').addEventListener('change',e=>importP(e.target.files[0]))}
+function exportP(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(P)],{type:'application/json'}));
+  a.download='mrcs-qbank-progress-'+day(Date.now())+'.json';a.click()}
+function importP(f){if(!f)return;f.text().then(t=>{const x=JSON.parse(t);for(const k in (x.h||{})){const seen=new Set((P.h[k]||[]).map(a=>a[0]));P.h[k]=(P.h[k]||[]).concat(x.h[k].filter(a=>!seen.has(a[0]))).sort((a,b)=>a[0]-b[0])}
+  Object.assign(P.f,x.f||{});Object.assign(P.notes,x.notes||{});const ids=new Set(P.sessions.map(s=>s.id));(x.sessions||[]).forEach(s=>{if(!ids.has(s.id))P.sessions.push(s)});
+  P.sessions.sort((a,b)=>a.start-b.start);save(true);toast('Progress imported');perf()}).catch(()=>toast('That file could not be read'))}
+// ---------------------------------------------------------------- mistakes tracker
+let mf={scope:'now',since:'all'};
+function mistakeList(){
+  // scope "now": latest attempt wrong; "ever": wrong at least once. P.m[key] = time you marked it mastered.
+  const out=[];for(const k in P.h){const q=QK[k];if(!q)continue;const h=P.h[k],wrongs=h.filter(x=>!x[2]);if(!wrongs.length)continue;
+    const l=h[h.length-1];if(mf.scope==='now'&&l[2])continue;const lw=wrongs[wrongs.length-1];
+    if(P.m[k]&&P.m[k]>lw[0])continue;                                   // mastered after the last mistake
+    if(mf.since==='7'&&lw[0]<Date.now()-7*864e5)continue;if(mf.since==='exp'&&lw[0]<=P.exp)continue;
+    out.push({q,k,n:wrongs.length,tries:h.length,lw,last:l})}
+  return out.sort((a,b)=>b.lw[0]-a.lw[0])}
+function mseg(k,opts){return `<span class="seg">`+opts.map(([v,l])=>`<button class="${mf[k]===v?'on':''}" data-act="mf" data-k="${k}" data-val="${v}">${l}</button>`).join('')+`</span>`}
+function mistakes(){
+  const L=mistakeList(),bySec={};L.forEach(x=>{bySec[x.q.t]=(bySec[x.q.t]||0)+1});
+  const top=Object.entries(bySec).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  let h=`<h1>Mistakes</h1><div class="card"><div class="field"><label>Show</label>${mseg('scope',[['now','Still wrong (latest try)'],['ever','Ever got wrong']])}</div>
+   <div class="field"><label>When</label>${mseg('since',[['all','Any time'],['7','Last 7 days'],['exp','Since last export']])}</div>
+   <div class="row"><button class="btn go" data-act="mpractise" ${L.length?'':'disabled'}>Practise these (${L.length})</button>
+   <button class="btn" data-act="mexport" ${L.length?'':'disabled'}>Export for Google Drive</button>
+   <button class="btn" data-act="mcopy" ${L.length?'':'disabled'}>Copy for Claude</button></div>
+   <div class="mute small" style="margin-top:8px">Export makes a file with each question, your answer, the right answer and Pastest's explanation, ready to save to Google Drive and ask Claude about.${P.exp?' Last export: '+new Date(P.exp).toLocaleString()+'.':''}</div></div>`;
+  if(top.length)h+=`<div class="card"><h2>Where the mistakes are</h2>${top.map(([t,n])=>`<div class="pl"><div class="n small">${T[t].section_no} ${esc(T[t].section)}</div><div class="c">${n} question${n>1?'s':''}</div></div>`).join('')}</div>`;
+  h+=`<div class="card"><h2>${L.length} question${L.length===1?'':'s'}</h2>`;
+  if(!L.length)h+='<div class="empty">No mistakes to show with these filters.</div>';
+  L.forEach(x=>{const q=x.q,mine=q.opts.find(o=>o.l===x.lw[1]),right=q.opts.find(o=>o.l===q.ans);
+    h+=`<div class="mrow"><div class="q"><div class="mute small">${T[q.t].section_no} ${esc(T[q.t].section)} · wrong ${x.n}× of ${x.tries} · ${new Date(x.lw[0]).toLocaleDateString()}${x.last[2]?' · <span style="color:var(--okd)">right last time</span>':''}</div>
+      <div>${esc((q.lead||q.stem).slice(0,180))}</div>
+      <div class="ab">You: <b class="r">${x.lw[1]}. ${esc(mine?mine.x:'')}</b> · Answer: <b class="g">${q.ans}. ${esc(right?right.x:'')}</b></div></div>
+      <div class="row" style="flex-direction:column;gap:6px"><button class="btn sm" data-act="one" data-k="${x.k}">Open</button><button class="btn sm ghost" data-act="master" data-k="${x.k}" title="Hide until you get it wrong again">✓ Got it</button></div></div>`});
+  app.innerHTML=h+'</div>'}
+function mistakesText(L){
+  const lines=[`# MRCS Part A — questions I got wrong`,`Exported ${new Date().toLocaleString()} · ${L.length} questions`,``,
+   `Instructions for Claude: for each question, explain (1) why the correct answer is right, (2) why my answer is wrong, `+
+   `(3) the underlying concept I am missing, in surgical-exam depth, and (4) one high-yield fact to remember. `+
+   `Use mostly clinical terms; use an analogy only for a genuinely difficult concept. Cite current guidelines or textbooks where relevant.`,``];
+  L.forEach((x,i)=>{const q=x.q,mine=q.opts.find(o=>o.l===x.lw[1]),right=q.opts.find(o=>o.l===q.ans);
+    lines.push(`---`,``,`## ${i+1}. ${T[q.t].section_no} ${T[q.t].section} (${T[q.t].chapter})`,``,q.stem.trim(),``);
+    q.opts.forEach(o=>lines.push(`- ${o.l}. ${o.x}`));
+    lines.push(``,`**My answer:** ${x.lw[1]}. ${mine?mine.x:''} (wrong ${x.n} of ${x.tries} attempts)`,`**Correct answer:** ${q.ans}. ${right?right.x:''}`,``);
+    if(right&&right.e)lines.push(`**Pastest explanation (correct answer):** ${right.e}`,``);
+    if(mine&&mine.e&&mine!==right)lines.push(`**Pastest explanation (my answer):** ${mine.e}`,``);
+    if(q.gen)lines.push(q.gen,``);
+    if(P.notes[x.k])lines.push(`**My note:** ${P.notes[x.k]}`,``)});
+  return lines.join('\n')}
+async function mexport(){const L=mistakeList();if(!L.length)return;const txt=mistakesText(L);
+  const name=`MRCS mistakes ${day(Date.now())}.md`,file=new File([txt],name,{type:'text/markdown'});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:name});P.exp=Date.now();save(true);mistakes();return}}catch(e){if(e&&e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;a.click();P.exp=Date.now();save(true);
+  toast('Saved — upload it to your Google Drive');mistakes()}
+async function mcopy(){const L=mistakeList().slice(0,25);const txt=mistakesText(L);
+  try{await navigator.clipboard.writeText(txt);toast(`Copied ${L.length} question${L.length>1?'s':''} — paste into Claude`)}
+  catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('Copied — paste into Claude')}}
+// ---------------------------------------------------------------- flagged & notes
+function flagged(){
+  const keys=[...new Set([...Object.keys(P.f),...Object.keys(P.notes)])].filter(k=>QK[k]).sort();
+  let h=`<h1>Flagged & notes</h1><div class="card">`;
+  if(!keys.length)h+='<div class="empty">Nothing yet. Flag questions (F) or write notes under an explanation, and they will be collected here.</div>';
+  else h+=`<div class="row" style="margin-bottom:12px"><button class="btn go" data-act="quick" data-k="flag" ${Object.keys(P.f).length?'':'disabled'}>Practise flagged (${Object.keys(P.f).length})</button></div><table><tr><th>Question</th><th>Note</th><th></th></tr>`+
+    keys.map(k=>{const q=QK[k];return `<tr><td style="width:45%"><span class="mute small">${T[q.t].section_no} ${esc(T[q.t].section)}${P.f[k]?' · <span style="color:var(--flag)">⚑ flagged</span>':''}</span><br>${esc((q.lead||q.stem).slice(0,140))}</td><td class="small">${esc(P.notes[k]||'')}</td><td class="n"><button class="btn sm" data-act="one" data-k="${k}">Open</button></td></tr>`}).join('')+'</table>';
+  app.innerHTML=h+'</div>'}
+// ---------------------------------------------------------------- actions
+const ACT={
+  go:d=>go(d.v), resume, discard:()=>{if(!confirm('Discard the unfinished session? Answers already submitted stay in your stats.'))return;
+    P.sessions=P.sessions.filter(s=>s.id!==P.cur);P.cur=null;save(true);go('dash')},
+  resumeid:d=>{P.cur=d.id;resume()}, openres:d=>go('results',d.id),
+  delsess:d=>{if(!confirm('Delete this session from history? Your answer statistics are kept.'))return;P.sessions=P.sessions.filter(s=>s.id!==d.id);if(P.cur===d.id)P.cur=null;save(true);history()},
+  quick:d=>{const cur=P.sessions.find(s=>s.id===P.cur&&!s.done);if(cur&&!confirm('You have an unfinished session. Start a new one anyway? (It stays in History.)'))return;quick(d.k)},
+  cfg:d=>{cfg[d.k]=isNaN(+d.val)?d.val:+d.val;saveCfg();build()},
+  selp:d=>{const p=+d.p;cfg.sel=p<0?[]:DB.topics.filter(t=>!p||(PAPER[t.chapter_no]||1)===p).map(t=>t.id);saveCfg();build()},
+  selch:(d,e)=>{const on=e.target.checked,s=new Set(cfg.sel);CH[d.c].secs.forEach(t=>on?s.add(t.id):s.delete(t.id));cfg.sel=[...s];saveCfg();build()},
+  selsec:(d,e)=>{const s=new Set(cfg.sel);e.target.checked?s.add(+d.t):s.delete(+d.t);cfg.sel=[...s];saveCfg();availCount()},
+  tog:d=>{const c=+d.c;openCh.has(c)?openCh.delete(c):openCh.add(c);build()},
+  start:()=>{const cur=P.sessions.find(s=>s.id===P.cur&&!s.done);if(cur&&!confirm('You have an unfinished session. Start a new one anyway? (It stays in History.)'))return;startFromCfg()},
+  pick:(d,e)=>{if(e.target.closest('.x'))return;pick(d.l)}, strike:(d,e)=>{e.stopPropagation();strike(d.l)},
+  submit, mv:d=>mv(+d.d), jump:d=>{S.i=+d.i;save();quiz()}, flag, endask:endAsk,
+  pause:()=>{S.paused=!S.paused;lastTick=Date.now();save(true);quiz()},
+  clearhl:()=>{delete S.hl[S.qs[S.i]];save();quiz()},
+  toresults:()=>go('results',S.id), rev:d=>{S.i=+d.i;go('quiz')},
+  retry:()=>{const keys=S.qs.filter(k=>S.ans[k]!==QK[k]?.ans);newSession(shuffle(keys),{name:'Retry: '+S.name.replace(/^Retry: /,''),mode:'practice',timer:'up'})},
+  psort:d=>{perfSort=d.s;perf()}, drill:d=>{cfg.sel=[+d.t];cfg.pool='all';cfg.kw='';saveCfg();go('build')},
+  export:exportP, import:()=>$('impf').click(),
+  reset:()=>{if(!confirm('Erase all answers, flags, notes and history? This cannot be undone (export first if unsure).'))return;P={h:{},f:{},notes:{},sessions:[],cur:null,cfg:P.cfg};save(true);perf()},
+  one:d=>newSession([d.k],{name:'Single question',mode:'practice',timer:'up'}),
+  mf:d=>{mf[d.k]=d.val;mistakes()}, master:d=>{P.m[d.k]=Date.now();save(true);mistakes()},
+  mpractise:()=>{const L=mistakeList();newSession(shuffle(L.map(x=>x.k)),{name:'Mistakes review',mode:'practice',timer:'up'})},
+  mexport, mcopy,
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||el.disabled)return;
+  if(el.tagName==='INPUT'&&el.type==='checkbox'&&e.type==='click'){ACT[el.dataset.act]&&ACT[el.dataset.act](el.dataset,e);return}
+  const f=ACT[el.dataset.act];if(f)f(el.dataset,e)});
+document.addEventListener('keydown',e=>{if(view!=='quiz'||!S||/INPUT|TEXTAREA/.test(e.target.tagName)||e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key.toUpperCase(),q=QK[S.qs[S.i]];
+  if(k==='P'&&!S.done){ACT.pause();return}if(S.paused)return;
+  if(q.opts.some(o=>o.l===k)){pick(k);return}
+  if(k==='ENTER'){const kk=S.qs[S.i];if(!S.done&&S.mode==='practice'&&!S.sub[kk])submit();else if(S.i<S.qs.length-1)mv(1);e.preventDefault()}
+  else if(k==='ARROWRIGHT')mv(1);else if(k==='ARROWLEFT')mv(-1);else if(k==='F')flag()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&S&&view==='quiz')save(true)});
+window.addEventListener('beforeunload',()=>save(true));
+// migrate: sessions from older versions had no data; keep answers/flags as they are
+go('dash');
+</script></body></html>
