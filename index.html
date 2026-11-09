@@ -147,7 +147,7 @@ function accColor(p){return p>=75?'var(--ok)':p>=55?'#e9a23b':'var(--bad)'}
 function bar(a,c,t){return `<div class="bar" title="${a}/${t} answered, ${pct(c,a)}% correct"><i style="width:${t?100*c/t:0}%;background:var(--ok)"></i><i style="width:${t?100*(a-c)/t:0}%;background:#e8a29c"></i></div>`}
 // ---------------------------------------------------------------- routing
 let view='dash',S=null,tick=null;
-const NAV=[['dash','Dashboard'],['build','New session'],['mistakes','Mistakes'],['history','History'],['perf','Performance'],['flagged','Flagged & notes']];
+const NAV=[['dash','Dashboard'],['build','New session'],['mistakes','Wrong questions'],['history','History'],['perf','Performance'],['flagged','Flagged & notes']];
 function go(v,arg){if(S&&v!=='quiz'){pauseClock()}view=v;stopTick();
   $('nav').innerHTML=NAV.map(([k,l])=>`<button class="${k===v?'on':''}" data-act="go" data-v="${k}">${l}</button>`).join('');
   ({dash,build,mistakes,history,perf,flagged,quiz,results})[v](arg);scrollTo(0,0)}
@@ -246,14 +246,16 @@ function startTick(){stopTick();lastTick=Date.now();tick=setInterval(onTick,1000
 function stopTick(){if(tick)clearInterval(tick);tick=null}
 function pauseClock(){stopTick();if(S)save(true)}
 function onTick(){if(!S||S.paused)return;const now=Date.now(),dt=(now-lastTick)/1000;lastTick=now;
-  S.elapsed+=dt;const k=S.qs[S.i];if(!S.sub[k])S.times[k]=(S.times[k]||0)+dt;
+  const k=S.qs[S.i];
+  if(S.mode==='exam'){S.elapsed+=dt;S.times[k]=(S.times[k]||0)+dt}
+  else if(!S.sub[k]){S.elapsed+=dt;S.times[k]=(S.times[k]||0)+dt}      // practice: clock stops once answered
   paintClock();save();
   if(S.mode==='exam'&&S.limit&&S.elapsed>=S.limit){toast('Time is up');finish()}
   if(S.mode==='practice'&&S.timer==='q60'&&!S.sub[k]&&(S.times[k]||0)>=60&&!S._warned){S._warned=k;toast('60 seconds — time to commit to an answer')}}
 function paintClock(){const el=$('clock');if(!el)return;const k=S.qs[S.i];
   if(S.mode==='exam'){const left=S.limit-S.elapsed;el.textContent='⏱ '+fmt(left)+' left';el.className='timer'+(left<300?' low':'')}
   else if(S.timer==='q60'){const left=60-(S.times[k]||0);el.textContent='⏱ '+fmt(Math.max(0,left));el.className='timer'+(left<=10?' low':'')}
-  else if(S.timer==='up'){el.textContent='⏱ '+fmt(S.times[k]||0)+' · total '+fmt(S.elapsed)}else el.textContent=''}
+  else if(S.timer==='up'){el.textContent='⏱ '+fmt(S.times[k]||0)+(S.sub[k]?' ✓':'');el.className='timer'}else el.textContent=''}
 // ---------------------------------------------------------------- question screen
 function resume(){S=P.sessions.find(s=>s.id===P.cur&&!s.done);if(S)go('quiz')}
 function quiz(){
@@ -276,7 +278,7 @@ function quiz(){
   h+=`<div class="qnav"><button class="btn" data-act="mv" data-d="-1" ${S.i?'':'disabled'}>← Previous</button>
      <button class="btn flagbtn ${P.f[k]?'on':''}" data-act="flag">⚑ ${P.f[k]?'Flagged':'Flag'}</button>
      ${S.hl[k]?'<button class="btn sm ghost" data-act="clearhl">Clear highlights</button>':''}<span class="sp"></span>`;
-  if(review){h+=`${S.i<n-1?'<button class="btn pri" data-act="mv" data-d="1">Next →</button>':''}<button class="btn" data-act="toresults">Back to results</button>`}
+  if(review){h+=`${S.i<n-1?'<button class="btn pri" data-act="mv" data-d="1">Next →</button>':''}<button class="btn" data-act="toresults">${S.reviewOnly?'Back to wrong questions':'Back to results'}</button>`}
   else if(S.mode==='practice'&&!S.sub[k]){h+=`<button class="btn pri" data-act="submit" ${chosen?'':'disabled'}>Submit answer</button>`}
   else{h+=S.i<n-1?`<button class="btn ${S.mode==='exam'?'':'pri'}" data-act="mv" data-d="1">${S.mode==='exam'?'Next →':'Next question →'}</button>`:''}
   if(!review)h+=`<button class="btn ${S.i===n-1?'pri':''}" data-act="endask">${S.mode==='exam'?'End exam':'Finish'}</button>`;
@@ -383,12 +385,12 @@ function mseg(k,opts){return `<span class="seg">`+opts.map(([v,l])=>`<button cla
 function mistakes(){
   const L=mistakeList(),bySec={};L.forEach(x=>{bySec[x.q.t]=(bySec[x.q.t]||0)+1});
   const top=Object.entries(bySec).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  let h=`<h1>Mistakes</h1><div class="card"><div class="field"><label>Show</label>${mseg('scope',[['now','Still wrong (latest try)'],['ever','Ever got wrong']])}</div>
+  let h=`<h1>Wrong questions</h1><div class="card"><div class="field"><label>Show</label>${mseg('scope',[['now','Still wrong (latest try)'],['ever','Ever got wrong']])}</div>
    <div class="field"><label>When</label>${mseg('since',[['all','Any time'],['7','Last 7 days'],['exp','Since last export']])}</div>
-   <div class="row"><button class="btn go" data-act="mpractise" ${L.length?'':'disabled'}>Practise these (${L.length})</button>
-   <button class="btn" data-act="mexport" ${L.length?'':'disabled'}>Export for Google Drive</button>
-   <button class="btn" data-act="mcopy" ${L.length?'':'disabled'}>Copy for Claude</button></div>
-   <div class="mute small" style="margin-top:8px">Export makes a file with each question, your answer, the right answer and Pastest's explanation, ready to save to Google Drive and ask Claude about.${P.exp?' Last export: '+new Date(P.exp).toLocaleString()+'.':''}</div></div>`;
+   <div class="row"><button class="btn pri" data-act="mreview" ${L.length?'':'disabled'}>Review answers (${L.length})</button>
+   <button class="btn go" data-act="mpractise" ${L.length?'':'disabled'}>Re-attempt</button></div>
+   <div class="mute small" style="margin-top:8px">Review shows each question with the right answer, your answer and the explanations. Re-attempt asks them again.</div></div>
+  <div class="card"><h2>Send to Google Drive for Claude</h2>${driveCard(L)}</div>`;
   if(top.length)h+=`<div class="card"><h2>Where the mistakes are</h2>${top.map(([t,n])=>`<div class="pl"><div class="n small">${T[t].section_no} ${esc(T[t].section)}</div><div class="c">${n} question${n>1?'s':''}</div></div>`).join('')}</div>`;
   h+=`<div class="card"><h2>${L.length} question${L.length===1?'':'s'}</h2>`;
   if(!L.length)h+='<div class="empty">No mistakes to show with these filters.</div>';
@@ -396,7 +398,7 @@ function mistakes(){
     h+=`<div class="mrow"><div class="q"><div class="mute small">${T[q.t].section_no} ${esc(T[q.t].section)} · wrong ${x.n}× of ${x.tries} · ${new Date(x.lw[0]).toLocaleDateString()}${x.last[2]?' · <span style="color:var(--okd)">right last time</span>':''}</div>
       <div>${esc((q.lead||q.stem).slice(0,180))}</div>
       <div class="ab">You: <b class="r">${x.lw[1]}. ${esc(mine?mine.x:'')}</b> · Answer: <b class="g">${q.ans}. ${esc(right?right.x:'')}</b></div></div>
-      <div class="row" style="flex-direction:column;gap:6px"><button class="btn sm" data-act="one" data-k="${x.k}">Open</button><button class="btn sm ghost" data-act="master" data-k="${x.k}" title="Hide until you get it wrong again">✓ Got it</button></div></div>`});
+      <div class="row" style="flex-direction:column;gap:6px"><button class="btn sm" data-act="rone" data-k="${x.k}">Review</button><button class="btn sm ghost" data-act="master" data-k="${x.k}" title="Hide until you get it wrong again">✓ Got it</button></div></div>`});
   app.innerHTML=h+'</div>'}
 function mistakesText(L){
   const lines=[`# MRCS Part A — questions I got wrong`,`Exported ${new Date().toLocaleString()} · ${L.length} questions`,``,
@@ -420,6 +422,32 @@ async function mexport(){const L=mistakeList();if(!L.length)return;const txt=mis
 async function mcopy(){const L=mistakeList().slice(0,25);const txt=mistakesText(L);
   try{await navigator.clipboard.writeText(txt);toast(`Copied ${L.length} question${L.length>1?'s':''} — paste into Claude`)}
   catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('Copied — paste into Claude')}}
+function reviewOnly(items,name){
+  // read-only pass through questions you got wrong: your (wrong) answer, the right one, explanations
+  S={id:'review',name,mode:'practice',timer:'off',start:Date.now(),qs:items.map(x=>x.k),i:0,
+     ans:Object.fromEntries(items.map(x=>[x.k,x.lw[1]])),sub:{},times:{},st:{},hl:{},elapsed:0,limit:0,done:true,reviewOnly:true};
+  go('quiz')}
+// ---------------------------------------------------------------- Google Drive upload
+const DRIVE_DEFAULT=/*__DRIVE__*/null;
+function drive(){return (P.drive&&P.drive.url)?P.drive:(DRIVE_DEFAULT||{})}
+function driveCard(L){const d=drive();
+  if(!d.url)return `<p class="small" style="margin-top:0">Connect your Google Drive once, then one tap saves these questions as a Google Doc in a Drive folder called <b>MRCS Mistakes</b>. Ask Claude to go through it with you.</p>
+    <div class="field"><label>Upload link</label><input type="search" id="durl" style="flex:1" placeholder="https://script.google.com/macros/s/…/exec"></div>
+    <div class="field"><label>Password</label><input type="search" id="dtok" style="flex:1" placeholder="the password set in the Drive script"></div>
+    <div class="row"><button class="btn" data-act="dsave">Connect</button><span class="sp"></span><button class="btn ghost sm" data-act="mexport" ${L.length?'':'disabled'}>Download file instead</button><button class="btn ghost sm" data-act="mcopy" ${L.length?'':'disabled'}>Copy for Claude</button></div>`;
+  return `<div class="row"><button class="btn go" data-act="dup" id="dupbtn" ${L.length?'':'disabled'}>Upload ${L.length} to Google Drive</button>
+    <button class="btn" data-act="mcopy" ${L.length?'':'disabled'}>Copy for Claude</button><button class="btn ghost sm" data-act="mexport" ${L.length?'':'disabled'}>Download file</button>
+    <span class="sp"></span><button class="btn ghost sm" data-act="dforget">Disconnect</button></div>
+    <div class="mute small" style="margin-top:8px">Saves a Google Doc in <b>MRCS Mistakes</b> with each question, your answer, the right answer, the explanations and your notes. Then ask Claude: “explain my latest MRCS mistakes from Google Drive”.${P.exp?'<br>Last sent: '+new Date(P.exp).toLocaleString()+' — use “Since last export” above to send only new ones.':''}${P.lastDoc?` <a href="${esc(P.lastDoc)}" target="_blank" rel="noopener">Open last doc</a>`:''}</div>`}
+async function driveUpload(){const L=mistakeList();if(!L.length)return;const d=drive();const b=$('dupbtn');if(b){b.disabled=true;b.textContent='Uploading…'}
+  const name='MRCS mistakes '+new Date().toLocaleString('en-GB',{year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  const body=JSON.stringify({token:d.token||'',name,content:mistakesText(L),count:L.length});
+  try{const r=await fetch(d.url,{method:'POST',body});const j=await r.json();
+    if(!j.ok)throw new Error(j.error||'refused');P.exp=Date.now();P.lastDoc=j.url||'';save(true);toast(`Saved to Google Drive: ${name}`);mistakes()}
+  catch(e){ if(e&&/refused|password|token/i.test(e.message)){toast('Google Drive refused it — check the password');mistakes();return}
+    // some browsers block reading the reply; send it blind and trust the script
+    try{await fetch(d.url,{method:'POST',body,mode:'no-cors'});P.exp=Date.now();save(true);toast('Sent to Google Drive — look in the MRCS Mistakes folder')}
+    catch(e2){toast('Could not reach Google Drive — check your connection')}mistakes()}}
 // ---------------------------------------------------------------- flagged & notes
 function flagged(){
   const keys=[...new Set([...Object.keys(P.f),...Object.keys(P.notes)])].filter(k=>QK[k]).sort();
@@ -445,7 +473,7 @@ const ACT={
   submit, mv:d=>mv(+d.d), jump:d=>{S.i=+d.i;save();quiz()}, flag, endask:endAsk,
   pause:()=>{S.paused=!S.paused;lastTick=Date.now();save(true);quiz()},
   clearhl:()=>{delete S.hl[S.qs[S.i]];save();quiz()},
-  toresults:()=>go('results',S.id), rev:d=>{S.i=+d.i;go('quiz')},
+  toresults:()=>S.reviewOnly?go('mistakes'):go('results',S.id), rev:d=>{S.i=+d.i;go('quiz')},
   retry:()=>{const keys=S.qs.filter(k=>S.ans[k]!==QK[k]?.ans);newSession(shuffle(keys),{name:'Retry: '+S.name.replace(/^Retry: /,''),mode:'practice',timer:'up'})},
   psort:d=>{perfSort=d.s;perf()}, drill:d=>{cfg.sel=[+d.t];cfg.pool='all';cfg.kw='';saveCfg();go('build')},
   export:exportP, import:()=>$('impf').click(),
@@ -454,6 +482,13 @@ const ACT={
   mf:d=>{mf[d.k]=d.val;mistakes()}, master:d=>{P.m[d.k]=Date.now();save(true);mistakes()},
   mpractise:()=>{const L=mistakeList();newSession(shuffle(L.map(x=>x.k)),{name:'Mistakes review',mode:'practice',timer:'up'})},
   mexport, mcopy,
+  mreview:()=>{const L=mistakeList();if(L.length)reviewOnly(L,'Review: wrong questions')},
+  rone:d=>{const x=mistakeList().find(y=>y.k===d.k)||{k:d.k,lw:[0,(last(d.k)||[])[1]]};reviewOnly([x],'Review: one question')},
+  dsave:()=>{const url=$('durl').value.trim(),token=$('dtok').value.trim();
+    if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)){toast('That does not look like a Google Apps Script link');return}
+    P.drive={url,token};save(true);toast('Google Drive connected');mistakes()},
+  dforget:()=>{P.drive={url:'',token:''};save(true);mistakes()},
+  dup:driveUpload,
 };
 document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||el.disabled)return;
   if(el.tagName==='INPUT'&&el.type==='checkbox'&&e.type==='click'){ACT[el.dataset.act]&&ACT[el.dataset.act](el.dataset,e);return}
