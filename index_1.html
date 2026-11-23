@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MRCS QBank</title>
+<meta name="theme-color" content="#4a5a72"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MRCS QBank"><meta name="robots" content="noindex,nofollow">
+<style>
+:root{--bg:#f4f2ee;--card:#fff;--ink:#1f2733;--mute:#6b7280;--line:#e5e1da;--navy:#4a5a72;--navy2:#3b485c;
+--red:#e0675f;--acc:#3f6aa8;--accs:#e7eef8;--opt:#efe9e5;--sel:#dde2ec;--ok:#6fbf73;--okd:#2f8a4c;--oks:#e8f5ea;
+--bad:#c0392b;--bads:#fbeaea;--flag:#e08a1e;--hl:#fff176}
+@media (prefers-color-scheme:dark){:root{--bg:#15181d;--card:#1e2229;--ink:#e6e8eb;--mute:#9aa1ab;--line:#2d323b;
+--opt:#262b33;--sel:#2e3a50;--accs:#24324a;--acc:#8fb0e3;--oks:#1c3424;--bads:#3a2221;--okd:#6fd08f;--hl:#8a7a12}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--acc)}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:6px;padding:0 18px;height:54px}
+.top .brand{font-weight:700;font-size:18px;letter-spacing:.2px;margin-right:14px;cursor:pointer;white-space:nowrap}
+.top .brand b{font-weight:800}
+.top nav{display:flex;gap:2px;overflow-x:auto}
+.top nav button{background:none;border:0;color:#dfe5ee;padding:8px 12px;border-radius:6px;font:inherit;font-size:15px;cursor:pointer;white-space:nowrap}
+.top nav button.on,.top nav button:hover{background:rgba(255,255,255,.12);color:#fff}
+main{max-width:980px;margin:0 auto;padding:22px 16px 90px}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 15px}
+.btn:hover{border-color:var(--acc)}.btn:disabled{opacity:.45;cursor:default}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}.btn.go{background:#2bc48a;border-color:#2bc48a;color:#fff}
+.btn.sm{padding:5px 10px;font-size:14px}.btn.ghost{border-color:transparent;background:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--mute);margin:0 0 12px;font-weight:650}
+h1{font-size:24px;margin:0 0 16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.sp{flex:1}
+.mute{color:var(--mute)}.small{font-size:13px}.b{font-weight:650}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.grid4{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kpi .v{font-size:26px;font-weight:750;line-height:1.2}.kpi .l{font-size:13px;color:var(--mute)}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.quick button{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;color:var(--ink)}
+.quick button:hover{border-color:var(--acc)}.quick button b{display:block;font-size:15px}.quick button span{font-size:13px;color:var(--mute)}
+.bar{height:7px;background:var(--line);border-radius:4px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.pl{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--line)}.pl:first-child{border-top:0}
+.pl .n{flex:1;min-width:0}.pl .bar{width:150px}.pl .c{width:96px;text-align:right;font-size:13px;color:var(--mute);white-space:nowrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 13px}
+.seg button:last-child{border-right:0}.seg button.on{background:var(--accs);color:var(--acc);font-weight:650}
+.field{display:flex;gap:14px;align-items:flex-start;margin:0 0 14px}.field>label{width:110px;flex:none;color:var(--mute);font-size:14px;padding-top:7px}
+@media (max-width:620px){.field{flex-direction:column;gap:6px}.field>label{padding:0}}
+input[type=number],input[type=search],input[type=date],textarea{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+input[type=number]{width:90px}textarea{width:100%;min-height:70px;resize:vertical}
+.ch{border-top:1px solid var(--line)}.ch:first-child{border-top:0}
+.chh{display:flex;align-items:center;gap:8px;padding:7px 0}.chh .tw{width:18px;color:var(--mute);cursor:pointer;font-size:12px;text-align:center}
+.chh .nm{flex:1;cursor:pointer}.chh .c{font-size:13px;color:var(--mute);white-space:nowrap}
+.secs{display:none;padding:0 0 6px 52px}.ch.open .secs{display:block}
+.secs label{display:flex;gap:8px;align-items:center;padding:3px 0;cursor:pointer;font-size:15px}.secs label .c{margin-left:auto;font-size:13px;color:var(--mute)}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:1px 7px;border-radius:5px;background:var(--accs);color:var(--acc);margin-left:6px;vertical-align:middle}
+/* ---------- question screen (Pastest look) ---------- */
+.qwrap{display:flex;gap:16px;align-items:flex-start}.qmain{flex:1;min-width:0}
+.qhead{background:var(--navy);color:#fff;border-radius:10px 10px 0 0;padding:16px 22px;display:flex;align-items:center;gap:14px}
+.qhead .logo{font-size:24px;font-weight:300;letter-spacing:-.3px}.qhead .logo b{font-weight:700}
+.qhead .qn{margin-left:auto;font-size:22px;font-weight:500}
+.qprog{height:8px;background:#7a8597;display:flex}.qprog i{background:var(--red);display:block}
+.qbody{background:var(--card);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;padding:22px 24px}
+.qmeta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mute);margin-bottom:14px;flex-wrap:wrap}
+.timer{font-variant-numeric:tabular-nums;font-weight:650;color:var(--ink);font-size:15px}.timer.low{color:var(--bad)}
+.stem{white-space:pre-wrap;margin:0 0 10px;color:#4b5563}@media (prefers-color-scheme:dark){.stem{color:#c7ccd3}}
+.lead{font-weight:700;margin:12px 0 16px;color:var(--ink)}
+mark{background:var(--hl);color:inherit;padding:0 1px;border-radius:2px}
+.opt{display:flex;align-items:stretch;gap:4px;margin:0 0 6px;cursor:pointer;user-select:none}
+.opt .l{width:44px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--opt);color:var(--mute);border-radius:4px 0 0 4px}
+.opt .t{flex:1;background:var(--opt);padding:11px 14px;border-radius:0 4px 4px 0;display:flex;align-items:center;gap:8px}
+.opt .t span{flex:1}.opt .x{opacity:0;border:0;background:none;color:var(--mute);font-size:15px;padding:0 4px}
+.opt:hover .x{opacity:.8}.opt.sel .l,.opt.sel .t{background:var(--sel)}
+.opt.ok .l,.opt.ok .t{background:var(--ok);color:#fff}.opt.bad .l,.opt.bad .t{background:var(--bads);color:var(--bad)}
+.opt.struck .t span{text-decoration:line-through;opacity:.45}
+.opt.ro{cursor:default}
+.qnav{display:flex;gap:8px;margin-top:18px;align-items:center;flex-wrap:wrap}
+.flagbtn.on{color:var(--flag);border-color:var(--flag)}
+.exp{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+.exp h3{font-size:20px;font-weight:500;margin:0 0 12px}
+.exp .eo{margin-bottom:14px}.exp .eo p{margin:8px 0 0;white-space:pre-wrap;font-size:15px;color:#4b5563}
+@media (prefers-color-scheme:dark){.exp .eo p{color:#c7ccd3}}
+.yours{font-size:12px;font-weight:700;margin-left:8px;opacity:.85}
+.verdict{font-weight:700;margin:0 0 14px;font-size:17px}.verdict.ok{color:var(--okd)}.verdict.bad{color:var(--bad)}
+img.orig{max-width:100%;border:1px solid var(--line);border-radius:8px;margin-top:10px;display:block}
+details summary{cursor:pointer;color:var(--mute);font-size:14px}
+.side{width:236px;flex:none;position:sticky;top:70px}
+@media (max-width:860px){.qwrap{flex-direction:column}.side{width:100%;position:static}}
+@media (max-width:620px){main{padding:14px 10px 80px}.qhead{padding:12px 14px}.qhead .logo{font-size:19px}.qhead .qn{font-size:17px}
+ .qbody{padding:16px 14px}.opt .l{width:36px}.opt .t{padding:10px 10px}.card{padding:14px}.top{padding:0 8px}.top .brand{font-size:16px;margin-right:4px}
+ .top nav button{padding:8px 8px;font-size:14px}.pl .bar{width:80px}.kbd{display:none}table{font-size:13px}}
+.mrow{border-top:1px solid var(--line);padding:12px 0;display:flex;gap:12px;align-items:flex-start}.mrow:first-child{border-top:0}
+.mrow .q{flex:1;min-width:0}.mrow .ab{font-size:13px;margin-top:4px}.mrow .ab b.r{color:var(--bad)}.mrow .ab b.g{color:var(--okd)}
+.navgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;max-height:52vh;overflow:auto;padding:2px}
+.navgrid button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:5px 0;font-size:13px;position:relative}
+.navgrid .ans{background:var(--sel)}.navgrid .ok{background:var(--oks);border-color:var(--ok)}.navgrid .bad{background:var(--bads);border-color:var(--bad)}
+.navgrid .cur{outline:2px solid var(--acc);outline-offset:1px}.navgrid .fl::after{content:"";position:absolute;top:2px;right:3px;width:6px;height:6px;border-radius:3px;background:var(--flag)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--mute);margin-top:10px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;border:1px solid var(--line)}
+.paused .qbody>*:not(.pausecover){filter:blur(7px);pointer-events:none}
+.pausecover{display:none}.paused .pausecover{display:flex;position:absolute;inset:0;align-items:center;justify-content:center;z-index:5}
+.qbody{position:relative}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);font-weight:650;cursor:pointer}
+td.n,th.n{text-align:right;white-space:nowrap}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:650}
+.pill.g{background:var(--oks);color:var(--okd)}.pill.a{background:#fdf1dc;color:#9a5b00}.pill.r{background:var(--bads);color:var(--bad)}
+.big{font-size:44px;font-weight:800;line-height:1}
+.kbd{font-size:12px;color:var(--mute);margin-top:12px}
+.empty{color:var(--mute);padding:10px 0}
+svg text{fill:var(--mute);font-size:11px}
+.hidem{}@media (max-width:620px){.hidem{display:none!important}}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--navy2);color:#fff;padding:9px 16px;border-radius:8px;font-size:14px;z-index:50}
+</style></head><body>
+<div class="top"><div class="brand" data-act="go" data-v="dash">MRCS <b>QBank</b></div>
+<nav id="nav"></nav></div>
+<main id="app"></main>
+<script src="data-1.js"></script><script src="data-2.js"></script><script src="data-3.js"></script><script>
+"use strict";
+const DB=JSON.parse(window.__QB.join(''));
+// ---------------------------------------------------------------- data
+const T={};DB.topics.forEach(t=>T[t.id]=t);
+const PAPER={1:1,4:1,5:1,8:1,9:1,11:1,12:1,2:2,3:2,6:2,7:2,10:2};   // chapter -> MRCS Part A paper
+const PAPERS={1:'Paper 1 · Applied Basic Sciences',2:'Paper 2 · Principles of Surgery in General'};
+DB.questions.forEach(q=>{q.key=T[q.t].section_no+':'+q.p;q.ch=T[q.t].chapter_no;q.paper=PAPER[q.ch]||1});
+const QK={};DB.questions.forEach(q=>QK[q.key]=q);
+const CH={};DB.topics.forEach(t=>{(CH[t.chapter_no]=CH[t.chapter_no]||{no:t.chapter_no,name:t.chapter,secs:[]}).secs.push(t)});
+// ---------------------------------------------------------------- storage
+const LS='mrcsqbank.v1';
+let P={h:{},f:{},notes:{},sessions:[],cur:null,cfg:null,m:{},exp:0};
+try{Object.assign(P,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
+P.h=P.h||{};P.f=P.f||{};P.notes=P.notes||{};P.sessions=P.sessions||[];P.m=P.m||{};P.exp=P.exp||0;
+let saveT=null;
+function save(now){clearTimeout(saveT);const f=()=>{try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){toast('Could not save progress in this browser')}};now?f():saveT=setTimeout(f,400)}
+const cfg=Object.assign({sel:DB.topics.map(t=>t.id),pool:'new',n:20,mode:'practice',order:'random',timer:'up'},P.cfg||{});
+function saveCfg(){P.cfg=cfg;save()}
+// ---------------------------------------------------------------- helpers
+const $=id=>document.getElementById(id),app=$('app');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
+const pct=(a,b)=>b?Math.round(100*a/b):0;
+const last=k=>{const h=P.h[k];return h&&h.length?h[h.length-1]:null};      // [time, chosen, correct?, secs]
+const day=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+function summary(qs){let a=0,c=0;for(const q of qs){const l=last(q.key);if(l){a++;if(l[2])c++}}return{a,c,t:qs.length}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+function accColor(p){return p>=75?'var(--ok)':p>=55?'#e9a23b':'var(--bad)'}
+function bar(a,c,t){return `<div class="bar" title="${a}/${t} answered, ${pct(c,a)}% correct"><i style="width:${t?100*c/t:0}%;background:var(--ok)"></i><i style="width:${t?100*(a-c)/t:0}%;background:#e8a29c"></i></div>`}
+// ---------------------------------------------------------------- routing
+let view='dash',S=null,tick=null;
+const NAV=[['dash','Dashboard'],['ready','Readiness'],['build','New session'],['mistakes','Wrong questions'],['history','History'],['perf','Performance'],['flagged','Flagged & notes']];
+function go(v,arg){if(S&&v!=='quiz'){pauseClock()}view=v;stopTick();
+  $('nav').innerHTML=NAV.map(([k,l])=>`<button class="${k===v?'on':''}" data-act="go" data-v="${k}">${l}</button>`).join('');
+  ({dash,ready,build,mistakes,history,perf,flagged,quiz,results})[v](arg);scrollTo(0,0)}
+// ---------------------------------------------------------------- dashboard
+function streak(){const ds=new Set(Object.values(P.h).flat().map(x=>day(x[0])));let n=0,d=new Date();
+  if(!ds.has(day(d)))d.setDate(d.getDate()-1);while(ds.has(day(d))){n++;d.setDate(d.getDate()-1)}return n}
+function dash(){
+  const all=summary(DB.questions),today=day(Date.now());
+  let tdN=0,tdC=0,tsec=0,tn=0;Object.values(P.h).forEach(h=>h.forEach(x=>{if(day(x[0])===today){tdN++;tdC+=x[2]}if(x[3]){tsec+=x[3];tn++}}));
+  const wrong=DB.questions.filter(q=>{const l=last(q.key);return l&&!l[2]}).length,flagged=Object.keys(P.f).length;
+  const cur=P.sessions.find(s=>s.id===P.cur&&!s.done);
+  let h=`<h1>Dashboard</h1><div class="grid4" style="margin-bottom:16px">
+   <div class="kpi"><div class="v">${all.a}<span class="mute" style="font-size:15px;font-weight:500"> / ${all.t}</span></div><div class="l">questions answered</div><div class="bar" style="margin-top:8px"><i style="width:${pct(all.a,all.t)}%;background:var(--acc)"></i></div></div>
+   <div class="kpi"><div class="v" style="color:${all.a?accColor(pct(all.c,all.a)):'inherit'}">${all.a?pct(all.c,all.a)+'%':'–'}</div><div class="l">correct (latest attempt)</div></div>
+   <div class="kpi"><div class="v">${tdN}</div><div class="l">today${tdN?' · '+pct(tdC,tdN)+'% correct':''}</div></div>
+   <div class="kpi"><div class="v">${streak()}</div><div class="l">day streak${tn?' · '+Math.round(tsec/tn)+' s / question':''}</div></div></div>`+readyMini();
+  if(cur){const n=cur.qs.length,a=Object.keys(cur.ans).length;
+    h+=`<div class="card row"><div><div class="b">Unfinished ${cur.mode==='exam'?'exam':'session'}: ${esc(cur.name)}</div><div class="mute small">${a}/${n} answered · started ${new Date(cur.start).toLocaleString()}</div></div><span class="sp"></span>
+    <button class="btn" data-act="discard">Discard</button><button class="btn go" data-act="resume">Resume</button></div>`}
+  h+=`<div class="card"><h2>Quick start</h2><div class="quick">
+   <button data-act="quick" data-k="new10"><b>10 new questions</b><span>Random unanswered, practice mode</span></button>
+   <button data-act="quick" data-k="wrong" ${wrong?'':'disabled'}><b>Revise my mistakes</b><span>${wrong} answered wrong last time</span></button>
+   <button data-act="quick" data-k="flag" ${flagged?'':'disabled'}><b>Flagged questions</b><span>${flagged} flagged</span></button>
+   <button data-act="quick" data-k="mini"><b>Mini mock · 60 Q</b><span>Mixed papers, 60 min, exam mode</span></button>
+   <button data-act="quick" data-k="p1"><b>Mock Paper 1 · 180 Q</b><span>Applied Basic Sciences, 3 h</span></button>
+   <button data-act="quick" data-k="p2"><b>Mock Paper 2 · 120 Q</b><span>Principles of Surgery in General, 2 h</span></button>
+  </div></div><div class="grid2">`;
+  for(const pp of [1,2]){h+=`<div class="card"><h2>${PAPERS[pp]}</h2>`;
+    Object.values(CH).filter(c=>(PAPER[c.no]||1)===pp).forEach(c=>{const s=summary(DB.questions.filter(q=>q.ch===c.no));
+      h+=`<div class="pl"><div class="n"><div class="small b">${c.no}. ${esc(c.name)}</div></div>${bar(s.a,s.c,s.t)}<div class="c">${s.a}/${s.t}${s.a?' · '+pct(s.c,s.a)+'%':''}</div></div>`});
+    h+='</div>'}
+  app.innerHTML=h+'</div><p class="mute small">Bars: green = correct, pink = wrong, grey = not yet answered.</p>';
+}
+// ---------------------------------------------------------------- session builder
+function poolOf(c){const sel=new Set(c.sel);return DB.questions.filter(q=>sel.has(q.t)).filter(q=>{const l=last(q.key);
+  return c.pool==='all'||(c.pool==='new'&&!l)||(c.pool==='wrong'&&l&&!l[2])||(c.pool==='flag'&&P.f[q.key])})}
+function seg(k,opts){return `<span class="seg">`+opts.map(([v,l])=>`<button class="${String(cfg[k])===String(v)?'on':''}" data-act="cfg" data-k="${k}" data-val="${v}">${l}</button>`).join('')+`</span>`}
+const openCh=new Set();
+function build(){
+  const sel=new Set(cfg.sel);
+  let h=`<h1>New session</h1><div class="card"><h2>Topics</h2><div class="row small" style="margin-bottom:10px">
+    <button class="btn sm" data-act="selp" data-p="0">All</button><button class="btn sm" data-act="selp" data-p="1">Paper 1 only</button>
+    <button class="btn sm" data-act="selp" data-p="2">Paper 2 only</button><button class="btn sm" data-act="selp" data-p="-1">Clear</button></div>`;
+  Object.values(CH).forEach(c=>{const on=c.secs.filter(t=>sel.has(t.id)).length,qs=DB.questions.filter(q=>q.ch===c.no),s=summary(qs);
+    h+=`<div class="ch ${openCh.has(c.no)?'open':''}" id="ch${c.no}"><div class="chh"><span class="tw" data-act="tog" data-c="${c.no}">${openCh.has(c.no)?'▼':'▶'}</span>
+    <input type="checkbox" data-act="selch" data-c="${c.no}" ${on===c.secs.length?'checked':''} ${on&&on<c.secs.length?'data-ind="1"':''}>
+    <span class="nm" data-act="tog" data-c="${c.no}">${c.no}. ${esc(c.name)}<span class="tag">P${PAPER[c.no]||1}</span></span><span class="c">${s.a}/${s.t}</span></div><div class="secs">`+
+    c.secs.map(t=>{const m=summary(qs.filter(q=>q.t===t.id));return `<label><input type="checkbox" data-act="selsec" data-t="${t.id}" ${sel.has(t.id)?'checked':''}> ${t.section_no} ${esc(t.section)}<span class="c">${m.a}/${m.t}${m.a?' · '+pct(m.c,m.a)+'%':''}</span></label>`}).join('')+`</div></div>`});
+  h+=`</div><div class="card"><h2>Settings</h2>
+   <div class="field"><label>Questions</label>${seg('pool',[['new','Unanswered'],['wrong','Answered wrong'],['flag','Flagged'],['all','All']])}</div>
+   <div class="field"><label>How many</label><div class="row"><input type="number" id="nq" min="1" value="${cfg.n||''}" placeholder="all"> ${seg('n',[[10,'10'],[20,'20'],[50,'50'],[100,'100'],[0,'All']])}</div></div>
+   <div class="field"><label>Mode</label><div>${seg('mode',[['practice','Practice'],['exam','Timed exam']])}
+     <div class="mute small" style="margin-top:6px">${cfg.mode==='exam'?'Exam conditions: 1 minute per question, answers and explanations shown at the end.':'Answer shown with explanations after each question.'}</div></div></div>
+   ${cfg.mode==='practice'?`<div class="field"><label>Timer</label>${seg('timer',[['up','Stopwatch'],['q60','60 s per question'],['off','Off']])}</div>`:''}
+   <div class="field"><label>Order</label>${seg('order',[['random','Random'],['seq','In book order']])}</div>
+   <div class="field"><label>Search</label><div style="flex:1"><input type="search" id="kw" style="width:100%" placeholder="Optional keywords, e.g. pyloric stenosis" value="${esc(cfg.kw||'')}"><div class="mute small" style="margin-top:4px">Only questions containing all the words (in the question, options or explanations).</div></div></div>
+   <div class="row" style="margin-top:6px"><button class="btn go" id="startbtn" data-act="start">Start</button><span class="mute" id="avail"></span></div></div>`;
+  app.innerHTML=h;
+  document.querySelectorAll('[data-ind]').forEach(x=>x.indeterminate=true);
+  $('nq').addEventListener('input',e=>{cfg.n=parseInt(e.target.value)||0;saveCfg();availCount()});
+  $('kw').addEventListener('input',e=>{cfg.kw=e.target.value;saveCfg();availCount()});
+  availCount();
+}
+function kwFilter(qs){const w=(cfg.kw||'').toLowerCase().split(/\s+/).filter(Boolean);if(!w.length)return qs;
+  return qs.filter(q=>{const s=(q.stem+' '+q.opts.map(o=>o.x+' '+o.e).join(' ')+' '+q.gen).toLowerCase();return w.every(x=>s.includes(x))})}
+function availCount(){const n=kwFilter(poolOf(cfg)).length;const take=cfg.n?Math.min(cfg.n,n):n;
+  $('avail').textContent=`${n} available · session of ${take}${cfg.mode==='exam'?' · '+take+' min':''}`;$('startbtn').disabled=!take}
+// ---------------------------------------------------------------- sessions
+function newSession(keys,o){
+  const s={id:Date.now().toString(36),name:o.name,mode:o.mode,timer:o.timer||'up',start:Date.now(),qs:keys,i:0,ans:{},sub:{},times:{},
+    st:{},hl:{},elapsed:0,limit:o.limit||0,done:false};
+  P.sessions.push(s);P.cur=s.id;
+  if(P.sessions.length>200)P.sessions=P.sessions.slice(-200);
+  save(true);S=s;go('quiz')}
+function startFromCfg(){let qs=kwFilter(poolOf(cfg));if(cfg.order==='random')shuffle(qs);else qs.sort((a,b)=>a.key<b.key?-1:1);
+  if(cfg.n)qs=qs.slice(0,cfg.n);if(!qs.length)return;
+  const secs=[...new Set(qs.map(q=>q.t))],nm=secs.length===1?T[secs[0]].section:secs.length<=3?secs.map(t=>T[t].section).join(', '):`${qs.length} questions, ${new Set(qs.map(q=>q.ch)).size} chapters`;
+  newSession(qs.map(q=>q.key),{name:(cfg.kw?'"'+cfg.kw+'" · ':'')+nm,mode:cfg.mode,timer:cfg.timer,limit:cfg.mode==='exam'?qs.length*60:0})}
+function quick(k){
+  const pick=(f,n)=>{let qs=shuffle(DB.questions.filter(f));return n?qs.slice(0,n):qs};
+  const unans=q=>!last(q.key);
+  // mocks prefer unanswered questions, topping up with answered ones if needed
+  const mock=(f,n)=>{let a=pick(q=>f(q)&&unans(q)),b=pick(q=>f(q)&&!unans(q));return shuffle(a.concat(b).slice(0,n))};
+  let qs,o;
+  if(k==='new10'){qs=pick(unans,10);o={name:'10 new questions',mode:'practice'}}
+  else if(k==='wrong'){qs=pick(q=>{const l=last(q.key);return l&&!l[2]});o={name:'Revise my mistakes',mode:'practice'}}
+  else if(k==='flag'){qs=pick(q=>P.f[q.key]);o={name:'Flagged questions',mode:'practice'}}
+  else if(k==='mini'){qs=mock(()=>true,60);o={name:'Mini mock (60 Q)',mode:'exam',limit:3600}}
+  else if(k==='p1'){qs=mock(q=>q.paper===1,180);o={name:'Mock Paper 1 · Applied Basic Sciences',mode:'exam',limit:3*3600}}
+  else if(k==='p2'){qs=mock(q=>q.paper===2,120);o={name:'Mock Paper 2 · Principles of Surgery in General',mode:'exam',limit:2*3600}}
+  if(!qs||!qs.length){toast('No questions for that yet');return}
+  newSession(qs.map(q=>q.key),o)}
+// ---------------------------------------------------------------- clock
+let lastTick=0;
+function startTick(){stopTick();lastTick=Date.now();tick=setInterval(onTick,1000)}
+function stopTick(){if(tick)clearInterval(tick);tick=null}
+function pauseClock(){stopTick();if(S)save(true)}
+function onTick(){if(!S||S.paused)return;const now=Date.now(),dt=(now-lastTick)/1000;lastTick=now;
+  const k=S.qs[S.i];
+  if(S.mode==='exam'){S.elapsed+=dt;S.times[k]=(S.times[k]||0)+dt}
+  else if(!S.sub[k]){S.elapsed+=dt;S.times[k]=(S.times[k]||0)+dt}      // practice: clock stops once answered
+  paintClock();save();
+  if(S.mode==='exam'&&S.limit&&S.elapsed>=S.limit){toast('Time is up');finish()}
+  if(S.mode==='practice'&&S.timer==='q60'&&!S.sub[k]&&(S.times[k]||0)>=60&&!S._warned){S._warned=k;toast('60 seconds — time to commit to an answer')}}
+function paintClock(){const el=$('clock');if(!el)return;const k=S.qs[S.i];
+  if(S.mode==='exam'){const left=S.limit-S.elapsed;el.textContent='⏱ '+fmt(left)+' left';el.className='timer'+(left<300?' low':'')}
+  else if(S.timer==='q60'){const left=60-(S.times[k]||0);el.textContent='⏱ '+fmt(Math.max(0,left));el.className='timer'+(left<=10?' low':'')}
+  else if(S.timer==='up'){el.textContent='⏱ '+fmt(S.times[k]||0)+(S.sub[k]?' ✓':'');el.className='timer'}else el.textContent=''}
+// ---------------------------------------------------------------- question screen
+function resume(){S=P.sessions.find(s=>s.id===P.cur&&!s.done);if(S)go('quiz')}
+function quiz(){
+  if(!S){go('dash');return}
+  const k=S.qs[S.i],q=QK[k];if(!q){S.i=0;return go('quiz')}
+  const n=S.qs.length,review=S.done,t=T[q.t],chosen=S.ans[k],shown=review||(S.mode==='practice'&&S.sub[k]),st=S.st[k]||{};
+  const lead=q.lead&&q.stem.trim().endsWith(q.lead)?q.lead:'';
+  const stemTxt=lead?q.stem.slice(0,q.stem.lastIndexOf(lead)).trim():q.stem;
+  let h=`<div class="qwrap"><div class="qmain ${S.paused?'paused':''}" id="qmain">
+   <div class="qhead"><div class="logo">MRCS <b>QBank</b></div><div class="qn">Question ${S.i+1} of ${n}</div></div>
+   <div class="qprog"><i style="width:${100*(S.i+1)/n}%"></i></div>
+   <div class="qbody"><div class="pausecover"><div style="text-align:center"><div class="b" style="font-size:20px;margin-bottom:10px">Paused</div><button class="btn go" data-act="pause">Resume</button></div></div>
+   <div class="qmeta"><span>${t.section_no} ${esc(t.section)}</span><span class="sp"></span><span class="timer" id="clock"></span>
+     ${review?'':`<button class="btn sm ghost" data-act="pause" title="Pause (P)">⏸</button>`}</div>
+   <p class="stem" id="stem">${S.hl[k]||esc(stemTxt)}</p>${lead?`<p class="lead">${esc(lead)}</p>`:''}`;
+  q.opts.forEach(o=>{let c='';if(shown){if(o.l===q.ans)c='ok';else if(o.l===chosen)c='bad'}else if(o.l===chosen)c='sel';if(st[o.l])c+=' struck';if(shown)c+=' ro';
+    h+=`<div class="opt ${c}" data-act="pick" data-l="${o.l}"><div class="l">${o.l}</div><div class="t"><span>${esc(o.x)}</span>${shown?(o.l===chosen?'<span class="yours">your answer</span>':''):`<button class="x" data-act="strike" data-l="${o.l}" title="Cross out (right-click)">✕</button>`}</div></div>`});
+  if(q.img){const pics=q.img.startsWith('data:')?q.img.split('|'):q.img.split(';');const auto=q.img.startsWith('data:')||/\b(shown|below|image|radiograph|x-ray|scan|photograph|figure|picture|film|ct|mri)\b/i.test(q.stem);
+    h+=`<details ${auto?'open':''} style="margin-top:12px"><summary>${q.img.startsWith('data:')?'Image':'Original page'}${pics.length>1?'s':''} (${pics.length})</summary>${pics.map(s=>`<img class="orig" loading="lazy" src="${esc(s)}">`).join('')}</details>`}
+  h+=`<div class="qnav"><button class="btn" data-act="mv" data-d="-1" ${S.i?'':'disabled'}>← Previous</button>
+     <button class="btn flagbtn ${P.f[k]?'on':''}" data-act="flag">⚑ ${P.f[k]?'Flagged':'Flag'}</button>
+     ${S.hl[k]?'<button class="btn sm ghost" data-act="clearhl">Clear highlights</button>':''}<span class="sp"></span>`;
+  if(review){h+=`${S.i<n-1?'<button class="btn pri" data-act="mv" data-d="1">Next →</button>':''}<button class="btn" data-act="toresults">${S.reviewOnly?'Back to wrong questions':'Back to results'}</button>`}
+  else if(S.mode==='practice'&&!S.sub[k]){h+=`<button class="btn pri" data-act="submit" ${chosen?'':'disabled'}>Submit answer</button>`}
+  else{h+=S.i<n-1?`<button class="btn ${S.mode==='exam'?'':'pri'}" data-act="mv" data-d="1">${S.mode==='exam'?'Next →':'Next question →'}</button>`:''}
+  if(!review)h+=`<button class="btn ${S.i===n-1?'pri':''}" data-act="endask">${S.mode==='exam'?'End exam':'Finish'}</button>`;
+  h+='</div>';
+  if(shown){const ok=chosen===q.ans;
+    h+=`<div class="exp"><h3>Explanation</h3>${chosen?`<div class="verdict ${ok?'ok':'bad'}">${ok?'Correct':'Incorrect'} — the answer is ${q.ans}${S.times[k]?` <span class="mute small" style="font-weight:400">· ${fmt(S.times[k])} on this question</span>`:''}</div>`:`<div class="verdict bad">Not answered — the answer is ${q.ans}</div>`}`;
+    const order=[q.opts.find(o=>o.l===q.ans),...q.opts.filter(o=>o.l!==q.ans)].filter(Boolean);
+    order.forEach(o=>{h+=`<div class="eo"><div class="opt ro ${o.l===q.ans?'ok':''}"><div class="l">${o.l}</div><div class="t"><span>${esc(o.x)}</span></div></div>${o.e?`<p>${esc(o.e)}</p>`:''}</div>`});
+    if(q.gen)h+=`<p class="stem" style="font-size:15px">${esc(q.gen)}</p>`;
+    h+=`<div style="margin-top:14px"><div class="mute small" style="margin-bottom:4px">My notes</div><textarea id="note" placeholder="Anything to remember about this question…">${esc(P.notes[k]||'')}</textarea></div></div>`}
+  h+=`</div></div><div class="side"><div class="card"><div class="row" style="margin-bottom:10px"><b>${esc(S.name)}</b></div>
+    <div class="mute small" style="margin-bottom:10px">${S.mode==='exam'?'Timed exam':'Practice'} · ${Object.keys(S.ans).length}/${n} answered${review?' · review':''}</div>
+    <div class="navgrid">${S.qs.map((x,i)=>{let c='';if(review||(S.mode==='practice'&&S.sub[x]))c=S.ans[x]?(S.ans[x]===QK[x].ans?'ok':'bad'):'';else if(S.ans[x])c='ans';
+      return `<button class="${c} ${i===S.i?'cur':''} ${P.f[x]?'fl':''}" data-act="jump" data-i="${i}">${i+1}</button>`}).join('')}</div>
+    <div class="legend"><span><i style="background:var(--sel)"></i>answered</span><span><i style="background:var(--oks);border-color:var(--ok)"></i>right</span><span><i style="background:var(--bads);border-color:var(--bad)"></i>wrong</span><span><i style="background:var(--flag);border-radius:5px"></i>flagged</span></div>
+    </div><div class="kbd">Keys: A–E choose · Enter submit / next · ← → move · F flag · P pause · right-click an option to cross it out · select text in the question to highlight it</div></div></div>`;
+  app.innerHTML=h;
+  if(!review){startTick();paintClock()}else{$('clock').textContent=S.elapsed?'Total time '+fmt(S.elapsed):''}
+  const note=$('note');if(note)note.addEventListener('input',()=>{const v=note.value.trim();if(v)P.notes[k]=note.value;else delete P.notes[k];save()});
+  $('stem').addEventListener('mouseup',highlight);
+  document.querySelectorAll('.opt[data-l]').forEach(el=>el.addEventListener('contextmenu',e=>{e.preventDefault();strike(el.dataset.l)}));
+}
+function highlight(){const sel=window.getSelection();if(!sel||sel.isCollapsed)return;const r=sel.getRangeAt(0),stem=$('stem');
+  if(!stem.contains(r.commonAncestorContainer))return;
+  try{const m=document.createElement('mark');m.appendChild(r.extractContents());r.insertNode(m);sel.removeAllRanges();
+    S.hl[S.qs[S.i]]=stem.innerHTML;save();quiz()}catch(e){}}
+function pick(l){const k=S.qs[S.i];if(S.done||(S.mode==='practice'&&S.sub[k]))return;S.ans[k]=l;save();quiz()}
+function strike(l){const k=S.qs[S.i];if(S.done)return;S.st[k]=S.st[k]||{};S.st[k][l]=!S.st[k][l];save();quiz()}
+function record(k,secs){const c=S.ans[k];if(!c)return;(P.h[k]=P.h[k]||[]).push([Date.now(),c,c===QK[k].ans?1:0,Math.round(secs||0)])}
+function submit(){const k=S.qs[S.i];if(!S.ans[k]||S.sub[k])return;S.sub[k]=1;record(k,S.times[k]);save(true);quiz()}
+function mv(d){S.i=Math.min(Math.max(S.i+d,0),S.qs.length-1);S._warned=null;save();quiz()}
+function flag(){const k=S.qs[S.i];if(P.f[k])delete P.f[k];else P.f[k]=1;save();quiz()}
+function endAsk(){const left=S.qs.filter(k=>!S.ans[k]).length;
+  if(left&&!confirm(`${left} question${left>1?'s are':' is'} unanswered. ${S.mode==='exam'?'End the exam now?':'Finish now?'}`))return;finish()}
+function finish(){stopTick();if(S.mode==='exam')S.qs.forEach(k=>{if(!S.sub[k]){S.sub[k]=1;record(k,S.times[k])}});
+  S.done=true;S.end=Date.now();if(P.cur===S.id)P.cur=null;save(true);go('results',S.id)}
+// ---------------------------------------------------------------- results
+function results(id){
+  const s=P.sessions.find(x=>x.id===id)||S;if(!s){go('dash');return}S=s;
+  const n=s.qs.length,ans=s.qs.filter(k=>s.ans[k]).length,ok=s.qs.filter(k=>s.ans[k]===QK[k]?.ans).length,p=pct(ok,n);
+  const per={};s.qs.forEach(k=>{const q=QK[k];if(!q)return;const x=per[q.t]=per[q.t]||[0,0,0];x[1]++;if(s.ans[k]===q.ans)x[0]++;x[2]+=s.times[k]||0});
+  let h=`<h1>${esc(s.name)}</h1><div class="grid4" style="margin-bottom:16px">
+   <div class="kpi"><div class="v big" style="color:${accColor(p)}">${p}%</div><div class="l">${ok} of ${n} correct</div></div>
+   <div class="kpi"><div class="v">${ans}/${n}</div><div class="l">answered</div></div>
+   <div class="kpi"><div class="v">${fmt(s.elapsed)}</div><div class="l">time${s.limit?' of '+fmt(s.limit):''}</div></div>
+   <div class="kpi"><div class="v">${ans?Math.round(s.qs.reduce((a,k)=>a+(s.times[k]||0),0)/Math.max(ans,1)):0} s</div><div class="l">per question</div></div></div>
+   <div class="card"><h2>Review questions</h2><div class="navgrid" style="grid-template-columns:repeat(auto-fill,minmax(40px,1fr));max-height:none">${s.qs.map((k,i)=>`<button class="${!s.ans[k]?'':s.ans[k]===QK[k]?.ans?'ok':'bad'} ${P.f[k]?'fl':''}" data-act="rev" data-i="${i}">${i+1}</button>`).join('')}</div>
+   <div class="row" style="margin-top:14px"><button class="btn pri" data-act="rev" data-i="0">Review all</button>
+   <button class="btn" data-act="retry" ${ok===n?'disabled':''}>Retry the ${n-ok} I got wrong / skipped</button><span class="sp"></span><button class="btn" data-act="go" data-v="dash">Dashboard</button></div></div>
+   <div class="card"><h2>By section</h2><table><tr><th>Section</th><th class="n">Score</th><th class="n">Time / Q</th></tr>${Object.entries(per).sort((a,b)=>a[1][0]/a[1][1]-b[1][0]/b[1][1]).map(([t,[a,b,tm]])=>`<tr><td>${T[t].section_no} ${esc(T[t].section)}</td><td class="n"><span class="pill ${a/b>=.75?'g':a/b>=.55?'a':'r'}">${a}/${b}</span></td><td class="n">${Math.round(tm/b)} s</td></tr>`).join('')}</table></div>`;
+  app.innerHTML=h}
+// ---------------------------------------------------------------- history
+function history(){
+  const ss=[...P.sessions].reverse();
+  let h=`<h1>History</h1><div class="card">`;
+  if(!ss.length)h+='<div class="empty">No sessions yet — start one from the dashboard.</div>';
+  else h+=`<table><tr><th>Date</th><th>Session</th><th class="n">Questions</th><th class="n">Score</th><th class="n">Time</th><th></th></tr>`+ss.map(s=>{const n=s.qs.length,ok=s.qs.filter(k=>s.ans[k]===QK[k]?.ans).length,a=Object.keys(s.ans).length;
+    return `<tr><td class="small">${new Date(s.start).toLocaleDateString()}<br><span class="mute">${new Date(s.start).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span></td>
+    <td>${esc(s.name)}<br><span class="mute small">${s.mode==='exam'?'Timed exam':'Practice'}${s.done?'':' · unfinished'}</span></td><td class="n">${a}/${n}</td>
+    <td class="n">${s.done?`<span class="pill ${ok/n>=.75?'g':ok/n>=.55?'a':'r'}">${pct(ok,n)}%</span>`:'–'}</td><td class="n">${fmt(s.elapsed)}</td>
+    <td class="n">${s.done?`<button class="btn sm" data-act="openres" data-id="${s.id}">Results</button>`:`<button class="btn sm go" data-act="resumeid" data-id="${s.id}">Resume</button>`} <button class="btn sm ghost" data-act="delsess" data-id="${s.id}" title="Delete">✕</button></td></tr>`}).join('')+'</table>';
+  app.innerHTML=h+'</div>'}
+// ---------------------------------------------------------------- performance
+let perfSort='acc';
+function perf(){
+  const days={};Object.values(P.h).flat().forEach(([ts,,c])=>{const d=day(ts);const x=days[d]=days[d]||[0,0];x[0]++;x[1]+=c});
+  const N=30,list=[];for(let i=N-1;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=day(d);list.push([k,...(days[k]||[0,0])])}
+  const mx=Math.max(10,...list.map(x=>x[1])),W=900,H=170,bw=W/N;
+  let svg=`<svg viewBox="0 0 ${W} ${H+24}" width="100%" role="img" aria-label="Questions per day, last 30 days">`;
+  list.forEach(([d,n,c],i)=>{const hh=H*n/mx,hc=H*c/mx;svg+=`<rect x="${i*bw+3}" y="${H-hh}" width="${bw-6}" height="${hh}" fill="#e8a29c" rx="2"><title>${d}: ${n} questions, ${pct(c,n)}% correct</title></rect><rect x="${i*bw+3}" y="${H-hc}" width="${bw-6}" height="${hc}" fill="var(--ok)" rx="2"><title>${d}: ${n} questions, ${pct(c,n)}% correct</title></rect>`;
+    if(i%5===0||i===N-1)svg+=`<text x="${i*bw+bw/2}" y="${H+16}" text-anchor="middle">${d.slice(5)}</text>`});
+  svg+=`<text x="2" y="12">${mx}</text></svg>`;
+  const rows=DB.topics.map(t=>{const qs=DB.questions.filter(q=>q.t===t.id),m=summary(qs);let ts=0,tn=0;qs.forEach(q=>(P.h[q.key]||[]).forEach(x=>{if(x[3]){ts+=x[3];tn++}}));return{t,m,p:m.a?m.c/m.a:-1,tq:tn?ts/tn:0}});
+  const srt={acc:(a,b)=>(a.m.a<3)-(b.m.a<3)||a.p-b.p,sec:(a,b)=>a.t.section_no<b.t.section_no?-1:1,done:(a,b)=>b.m.a/b.m.t-a.m.a/a.m.t,time:(a,b)=>b.tq-a.tq}[perfSort];
+  const all=summary(DB.questions);
+  let h=`<h1>Performance</h1><div class="grid4" style="margin-bottom:16px">${[1,2].map(pp=>{const s=summary(DB.questions.filter(q=>q.paper===pp));return `<div class="kpi"><div class="v" style="color:${s.a?accColor(pct(s.c,s.a)):'inherit'}">${s.a?pct(s.c,s.a)+'%':'–'}</div><div class="l">Paper ${pp} · ${s.a}/${s.t} done</div></div>`}).join('')}
+    <div class="kpi"><div class="v">${Object.values(P.h).reduce((a,h)=>a+h.length,0)}</div><div class="l">total attempts</div></div>
+    <div class="kpi"><div class="v">${P.sessions.filter(s=>s.done).length}</div><div class="l">sessions completed</div></div></div>
+  <div class="card"><h2>Last 30 days</h2>${svg}<div class="legend"><span><i style="background:var(--ok)"></i>correct</span><span><i style="background:#e8a29c"></i>wrong</span></div></div>
+  <div class="card"><h2>By section</h2><div class="mute small" style="margin-bottom:8px">Sorted by ${({acc:'weakest first (min. 3 answered)',sec:'section',done:'most complete',time:'slowest'})[perfSort]} — click a heading to sort.</div>
+  <table><tr><th data-act="psort" data-s="sec">Section</th><th class="n" data-act="psort" data-s="done">Done</th><th class="n" data-act="psort" data-s="acc">Correct</th><th class="n" data-act="psort" data-s="time">Time / Q</th><th></th></tr>
+  ${rows.sort(srt).map(r=>`<tr><td>${r.t.section_no} ${esc(r.t.section)}</td><td class="n">${r.m.a}/${r.m.t}</td><td class="n">${r.m.a?`<span class="pill ${r.p>=.75?'g':r.p>=.55?'a':'r'}">${pct(r.m.c,r.m.a)}%</span>`:'–'}</td><td class="n">${r.tq?Math.round(r.tq)+' s':'–'}</td><td class="n"><button class="btn sm" data-act="drill" data-t="${r.t.id}">Practise</button></td></tr>`).join('')}</table></div>
+  <div class="card"><h2>Your data</h2><p class="mute small" style="margin-top:0">Progress is saved in this browser only. Export it to back it up or to move it to another browser or computer.</p>
+  <div class="row"><button class="btn" data-act="export">Export progress</button><button class="btn" data-act="import">Import progress</button><input type="file" id="impf" accept=".json" style="display:none">
+  <span class="sp"></span><button class="btn" data-act="reset" style="color:var(--bad)">Reset everything</button></div></div>`;
+  app.innerHTML=h;
+  $('impf').addEventListener('change',e=>importP(e.target.files[0]))}
+function exportP(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(P)],{type:'application/json'}));
+  a.download='mrcs-qbank-progress-'+day(Date.now())+'.json';a.click()}
+function importP(f){if(!f)return;f.text().then(t=>{const x=JSON.parse(t);for(const k in (x.h||{})){const seen=new Set((P.h[k]||[]).map(a=>a[0]));P.h[k]=(P.h[k]||[]).concat(x.h[k].filter(a=>!seen.has(a[0]))).sort((a,b)=>a[0]-b[0])}
+  Object.assign(P.f,x.f||{});Object.assign(P.notes,x.notes||{});if(x.goal&&!P.goal)P.goal=x.goal;const ids=new Set(P.sessions.map(s=>s.id));(x.sessions||[]).forEach(s=>{if(!ids.has(s.id))P.sessions.push(s)});
+  P.sessions.sort((a,b)=>a.start-b.start);save(true);toast('Progress imported');perf()}).catch(()=>toast('That file could not be read'))}
+// ---------------------------------------------------------------- mistakes tracker
+let mf={scope:'now',since:'all'};
+function mistakeList(){
+  // scope "now": latest attempt wrong; "ever": wrong at least once. P.m[key] = time you marked it mastered.
+  const out=[];for(const k in P.h){const q=QK[k];if(!q)continue;const h=P.h[k],wrongs=h.filter(x=>!x[2]);if(!wrongs.length)continue;
+    const l=h[h.length-1];if(mf.scope==='now'&&l[2])continue;const lw=wrongs[wrongs.length-1];
+    if(P.m[k]&&P.m[k]>lw[0])continue;                                   // mastered after the last mistake
+    if(mf.since==='7'&&lw[0]<Date.now()-7*864e5)continue;if(mf.since==='exp'&&lw[0]<=P.exp)continue;
+    out.push({q,k,n:wrongs.length,tries:h.length,lw,last:l})}
+  return out.sort((a,b)=>b.lw[0]-a.lw[0])}
+function mseg(k,opts){return `<span class="seg">`+opts.map(([v,l])=>`<button class="${mf[k]===v?'on':''}" data-act="mf" data-k="${k}" data-val="${v}">${l}</button>`).join('')+`</span>`}
+function mistakes(){
+  const L=mistakeList(),bySec={};L.forEach(x=>{bySec[x.q.t]=(bySec[x.q.t]||0)+1});
+  const top=Object.entries(bySec).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  let h=`<h1>Wrong questions</h1><div class="card"><div class="field"><label>Show</label>${mseg('scope',[['now','Still wrong (latest try)'],['ever','Ever got wrong']])}</div>
+   <div class="field"><label>When</label>${mseg('since',[['all','Any time'],['7','Last 7 days'],['exp','Since last export']])}</div>
+   <div class="row"><button class="btn pri" data-act="mreview" ${L.length?'':'disabled'}>Review answers (${L.length})</button>
+   <button class="btn go" data-act="mpractise" ${L.length?'':'disabled'}>Re-attempt</button></div>
+   <div class="mute small" style="margin-top:8px">Review shows each question with the right answer, your answer and the explanations. Re-attempt asks them again.</div></div>
+  <div class="card"><h2>Send to Google Drive for Claude</h2>${driveCard(L)}</div>`;
+  if(top.length)h+=`<div class="card"><h2>Where the mistakes are</h2>${top.map(([t,n])=>`<div class="pl"><div class="n small">${T[t].section_no} ${esc(T[t].section)}</div><div class="c">${n} question${n>1?'s':''}</div></div>`).join('')}</div>`;
+  h+=`<div class="card"><h2>${L.length} question${L.length===1?'':'s'}</h2>`;
+  if(!L.length)h+='<div class="empty">No mistakes to show with these filters.</div>';
+  L.forEach(x=>{const q=x.q,mine=q.opts.find(o=>o.l===x.lw[1]),right=q.opts.find(o=>o.l===q.ans);
+    h+=`<div class="mrow"><div class="q"><div class="mute small">${T[q.t].section_no} ${esc(T[q.t].section)} · wrong ${x.n}× of ${x.tries} · ${new Date(x.lw[0]).toLocaleDateString()}${x.last[2]?' · <span style="color:var(--okd)">right last time</span>':''}</div>
+      <div>${esc((q.lead||q.stem).slice(0,180))}</div>
+      <div class="ab">You: <b class="r">${x.lw[1]}. ${esc(mine?mine.x:'')}</b> · Answer: <b class="g">${q.ans}. ${esc(right?right.x:'')}</b></div></div>
+      <div class="row" style="flex-direction:column;gap:6px"><button class="btn sm" data-act="rone" data-k="${x.k}">Review</button><button class="btn sm ghost" data-act="master" data-k="${x.k}" title="Hide until you get it wrong again">✓ Got it</button></div></div>`});
+  app.innerHTML=h+'</div>'}
+function mistakesText(L){
+  const lines=[`# MRCS Part A — questions I got wrong`,`Exported ${new Date().toLocaleString()} · ${L.length} questions`,``,
+   `Instructions for Claude: for each question, explain (1) why the correct answer is right, (2) why my answer is wrong, `+
+   `(3) the underlying concept I am missing, in surgical-exam depth, and (4) one high-yield fact to remember. `+
+   `Use mostly clinical terms; use an analogy only for a genuinely difficult concept. Cite current guidelines or textbooks where relevant.`,``];
+  L.forEach((x,i)=>{const q=x.q,mine=q.opts.find(o=>o.l===x.lw[1]),right=q.opts.find(o=>o.l===q.ans);
+    lines.push(`---`,``,`## ${i+1}. ${T[q.t].section_no} ${T[q.t].section} (${T[q.t].chapter})`,``,q.stem.trim(),``);
+    q.opts.forEach(o=>lines.push(`- ${o.l}. ${o.x}`));
+    lines.push(``,`**My answer:** ${x.lw[1]}. ${mine?mine.x:''} (wrong ${x.n} of ${x.tries} attempts)`,`**Correct answer:** ${q.ans}. ${right?right.x:''}`,``);
+    if(right&&right.e)lines.push(`**Pastest explanation (correct answer):** ${right.e}`,``);
+    if(mine&&mine.e&&mine!==right)lines.push(`**Pastest explanation (my answer):** ${mine.e}`,``);
+    if(q.gen)lines.push(q.gen,``);
+    if(P.notes[x.k])lines.push(`**My note:** ${P.notes[x.k]}`,``)});
+  return lines.join('\n')}
+async function mexport(){const L=mistakeList();if(!L.length)return;const txt=mistakesText(L);
+  const name=`MRCS mistakes ${day(Date.now())}.md`,file=new File([txt],name,{type:'text/markdown'});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:name});P.exp=Date.now();save(true);mistakes();return}}catch(e){if(e&&e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;a.click();P.exp=Date.now();save(true);
+  toast('Saved — upload it to your Google Drive');mistakes()}
+async function mcopy(){const L=mistakeList().slice(0,25);const txt=mistakesText(L);
+  try{await navigator.clipboard.writeText(txt);toast(`Copied ${L.length} question${L.length>1?'s':''} — paste into Claude`)}
+  catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('Copied — paste into Claude')}}
+function reviewOnly(items,name){
+  // read-only pass through questions you got wrong: your (wrong) answer, the right one, explanations
+  S={id:'review',name,mode:'practice',timer:'off',start:Date.now(),qs:items.map(x=>x.k),i:0,
+     ans:Object.fromEntries(items.map(x=>[x.k,x.lw[1]])),sub:{},times:{},st:{},hl:{},elapsed:0,limit:0,done:true,reviewOnly:true};
+  go('quiz')}
+// ---------------------------------------------------------------- Google Drive upload
+const DRIVE_DEFAULT=/*__DRIVE__*/null;
+function drive(){return (P.drive&&P.drive.url)?P.drive:(DRIVE_DEFAULT||{})}
+function driveCard(L){const d=drive();
+  if(!d.url)return `<p class="small" style="margin-top:0">Connect your Google Drive once, then one tap saves these questions as a Google Doc in a Drive folder called <b>MRCS Mistakes</b>. Ask Claude to go through it with you.</p>
+    <div class="field"><label>Upload link</label><input type="search" id="durl" style="flex:1" placeholder="https://script.google.com/macros/s/…/exec"></div>
+    <div class="field"><label>Password</label><input type="search" id="dtok" style="flex:1" placeholder="the password set in the Drive script"></div>
+    <div class="row"><button class="btn" data-act="dsave">Connect</button><span class="sp"></span><button class="btn ghost sm" data-act="mexport" ${L.length?'':'disabled'}>Download file instead</button><button class="btn ghost sm" data-act="mcopy" ${L.length?'':'disabled'}>Copy for Claude</button></div>`;
+  return `<div class="row"><button class="btn go" data-act="dup" id="dupbtn" ${L.length?'':'disabled'}>Upload ${L.length} to Google Drive</button>
+    <button class="btn" data-act="mcopy" ${L.length?'':'disabled'}>Copy for Claude</button><button class="btn ghost sm" data-act="mexport" ${L.length?'':'disabled'}>Download file</button>
+    <span class="sp"></span><button class="btn ghost sm" data-act="dforget">Disconnect</button></div>
+    <div class="mute small" style="margin-top:8px">Saves a Google Doc in <b>MRCS Mistakes</b> with each question, your answer, the right answer, the explanations and your notes. Then ask Claude: “explain my latest MRCS mistakes from Google Drive”.${P.exp?'<br>Last sent: '+new Date(P.exp).toLocaleString()+' — use “Since last export” above to send only new ones.':''}${P.lastDoc?` <a href="${esc(P.lastDoc)}" target="_blank" rel="noopener">Open last doc</a>`:''}</div>`}
+async function driveUpload(){const L=mistakeList();if(!L.length)return;const d=drive();const b=$('dupbtn');if(b){b.disabled=true;b.textContent='Uploading…'}
+  const name='MRCS mistakes '+new Date().toLocaleString('en-GB',{year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  const body=JSON.stringify({token:d.token||'',name,content:mistakesText(L),count:L.length});
+  try{const r=await fetch(d.url,{method:'POST',body});const j=await r.json();
+    if(!j.ok)throw new Error(j.error||'refused');P.exp=Date.now();P.lastDoc=j.url||'';save(true);toast(`Saved to Google Drive: ${name}`);mistakes()}
+  catch(e){ if(e&&/refused|password|token/i.test(e.message)){toast('Google Drive refused it — check the password');mistakes();return}
+    // some browsers block reading the reply; send it blind and trust the script
+    try{await fetch(d.url,{method:'POST',body,mode:'no-cors'});P.exp=Date.now();save(true);toast('Sent to Google Drive — look in the MRCS Mistakes folder')}
+    catch(e2){toast('Could not reach Google Drive — check your connection')}mistakes()}}
+// ---------------------------------------------------------------- readiness intelligence
+// Everything here is computed from P.h (your answer history) — nothing new is stored except your goal settings.
+// Prediction uses FIRST attempts only (a fresh question is what the exam gives you; repeats inflate scores),
+// weighted towards recent work, and shrunk towards your average where a chapter has few answers.
+const BANK_N=DB.questions.length,DAY=864e5,HALF=21,K=5;
+const PW={1:180/300,2:120/300};                                   // share of the 300 exam marks per paper
+const chN={},secN={},paperN={1:0,2:0};DB.questions.forEach(q=>{chN[q.ch]=(chN[q.ch]||0)+1;secN[q.t]=(secN[q.t]||0)+1;paperN[q.paper]++});
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+function goal(){const g=P.goal||{};return{date:g.date||'2027-04-29',target:+g.target||72,cover:+g.cover||60}}
+function predict(asOf){asOf=asOf||Date.now();const byCh={},byP={1:[0,0],2:[0,0]};let n=0;
+  for(const k in P.h){const q=QK[k],h=P.h[k];if(!q||!h.length)continue;const f=h[0];if(f[0]>asOf)continue;n++;
+    const w=Math.pow(.5,(asOf-f[0])/DAY/HALF),x=byCh[q.ch]=byCh[q.ch]||[0,0];x[0]+=w*f[2];x[1]+=w;byP[q.paper][0]+=w*f[2];byP[q.paper][1]+=w}
+  const sw=byP[1][1]+byP[2][1],base=sw?(byP[1][0]+byP[2][0])/sw:.5,paper={};
+  for(const pp of [1,2]){const pb=(byP[pp][0]+K*base)/(byP[pp][1]+K);let s=0;
+    Object.values(CH).filter(c=>(PAPER[c.no]||1)===pp).forEach(c=>{const x=byCh[c.no]||[0,0];s+=chN[c.no]/paperN[pp]*(x[0]+K*pb)/(x[1]+K)});paper[pp]=s}
+  const overall=PW[1]*paper[1]+PW[2]*paper[2];
+  return{n,overall,paper,base,se:Math.sqrt(overall*(1-overall)/Math.max(sw,1))}}
+function intel(){
+  const g=goal(),tg=g.target/100,cg=g.cover/100,now=Date.now(),pr=predict(now);
+  const C={seen:0,att:0,cl:0,wl:0,fc:0,retried:0,fixed:0,slipped:0,tsum:0,tn:0,in60:0,skipI:0,skipU:0,stuck:0};
+  const sec={},seenCh={},days=new Set();let new14=0,a7=0,a7p=0,f7=[0,0],f7p=[0,0];
+  for(const k in P.h){const q=QK[k],h=P.h[k];if(!q||!h.length)continue;const l=h[h.length-1];C.seen++;C.att+=h.length;l[2]?C.cl++:C.wl++;C.fc+=h[0][2];
+    if(!h[0][2]&&h.length>1){C.retried++;if(l[2])C.fixed++}
+    if(!l[2]&&h.slice(0,-1).some(x=>x[2]))C.slipped++;
+    if(h.filter(x=>!x[2]).length>=2&&!l[2])C.stuck++;
+    seenCh[q.ch]=(seenCh[q.ch]||0)+1;if(h[0][0]>now-14*DAY)new14++;
+    const s=sec[q.t]=sec[q.t]||{seen:0,f:0,fw:0,lc:0,ts:0,tn:0,slip:0};
+    const w=Math.pow(.5,(now-h[0][0])/DAY/HALF);s.seen++;s.f+=w*h[0][2];s.fw+=w;s.lc+=l[2];if(!l[2]&&h.slice(0,-1).some(x=>x[2]))s.slip++;
+    if(h[0][0]>now-7*DAY){f7[0]+=h[0][2];f7[1]++}else if(h[0][0]>now-14*DAY){f7p[0]+=h[0][2];f7p[1]++}
+    h.forEach(x=>{days.add(day(x[0]));if(x[0]>now-7*DAY)a7++;else if(x[0]>now-14*DAY)a7p++;if(x[3]){C.tsum+=x[3];C.tn++;if(x[3]<=60)C.in60++;s.ts+=x[3];s.tn++}})}
+  const everAns=new Set(Object.keys(P.h)),skipK=new Set();
+  P.sessions.filter(s=>s.done).forEach(s=>s.qs.forEach(k=>{if(!s.ans[k]){C.skipI++;if(!everAns.has(k))skipK.add(k)}}));C.skipU=skipK.size;
+  // coverage — breadth across chapters, weighted by exam share, against your coverage goal
+  let cov=0,needQ=0;Object.values(CH).forEach(c=>{const pp=PAPER[c.no]||1,goalN=Math.ceil(cg*chN[c.no]),s=seenCh[c.no]||0;
+    cov+=PW[pp]*chN[c.no]/paperN[pp]*Math.min(s/goalN,1);needQ+=Math.max(0,goalN-s)});
+  // exam technique — pace and best timed mock (≥50 questions)
+  const avgT=C.tn?C.tsum/C.tn:0,mocks=P.sessions.filter(s=>s.done&&s.mode==='exam'&&s.qs.length>=50).map(s=>({s,p:s.qs.filter(k=>s.ans[k]===QK[k]?.ans).length/s.qs.length}));
+  const best=mocks.reduce((a,m)=>Math.max(a,m.p),0),paceS=C.tn?clamp(1-(avgT-60)/60):0,mockS=mocks.length?clamp((best-.4)/(tg-.4)):0;
+  const minP=Math.min(pr.paper[1],pr.paper[2]);
+  const perfS=clamp((pr.overall-.4)/(tg+.03-.4)),floorS=clamp((minP-.4)/(tg-.02-.4));
+  const score=C.seen?Math.round(100*(.5*perfS+.15*floorS+.25*cov+.10*(.5*paceS+.5*mockS))):0;
+  const calibrating=C.seen<50,ready=!calibrating&&pr.overall>=tg&&minP>=tg-.03&&cov>=.9;
+  const level=ready?'Exam ready':score>=65?'Approaching ready':score>=40?'Developing':'Building foundations';
+  // weekly benchmark series (predicted score at the end of each of the last 12 weeks)
+  const weeks=[];for(let i=11;i>=0;i--){const end=now-i*7*DAY,p=predict(end);let q=0,nf=[0,0];
+    for(const k in P.h)P.h[k].forEach((x,j)=>{if(x[0]<=end&&x[0]>end-7*DAY){q++;if(j===0){nf[0]+=x[2];nf[1]++}}});
+    weeks.push({end,p:p.n>=20?p.overall:null,q,fa:nf[1]?nf[0]/nf[1]:null,nf:nf[1]})}
+  const pts=weeks.map((w,i)=>[i,w.p]).filter(x=>x[1]!=null).slice(-8);let slope=null;
+  if(pts.length>=3){const mx=pts.reduce((a,x)=>a+x[0],0)/pts.length,my=pts.reduce((a,x)=>a+x[1],0)/pts.length;
+    slope=pts.reduce((a,x)=>a+(x[0]-mx)*(x[1]-my),0)/pts.reduce((a,x)=>a+(x[0]-mx)**2,0)}
+  // time to readiness
+  const gap=Math.max(tg-pr.overall,tg-.03-minP,0),pace=new14/14,examT=new Date(g.date+'T09:00').getTime(),daysLeft=Math.max(0,(examT-now)/DAY);
+  const covW=needQ?(pace>0?needQ/(pace*7):null):0,scoreW=gap<=0?0:(slope&&slope>.001?gap/slope:null);
+  const etaW=(covW==null||scoreW==null)?null:Math.max(covW,scoreW);
+  const needPace=daysLeft>0?needQ/daysLeft:null;
+  // focus areas — marks (out of 300) you are likely losing vs your target, plus a penalty for untested sections
+  const focus=DB.topics.map(t=>{const s=sec[t.id]||{seen:0,f:0,fw:0,lc:0,ts:0,tn:0,slip:0},pp=PAPER[t.chapter_no]||1,share=PW[pp]*secN[t.id]/paperN[pp];
+    const acc=(s.f+K*pr.base)/(s.fw+K),covT=Math.min(s.seen/Math.max(1,cg*secN[t.id]),1);
+    const lost=share*300*Math.max(0,tg-acc),unk=share*300*(1-covT)*.15,tq=s.tn?s.ts/s.tn:0;
+    const why=[];if(s.seen<3)why.push(['Not tested yet','a']);else if(acc<tg-.1)why.push(['Below target','r']);
+    if(s.seen>=3&&covT<.3)why.push([`Seen ${s.seen}/${secN[t.id]}`,'a']);if(tq>75)why.push([`Slow · ${Math.round(tq)} s`,'a']);if(s.slip)why.push([`${s.slip} slipping`,'r']);
+    return{t,s,share,acc,covT,pri:lost+unk,lost,why,pp}}).sort((a,b)=>b.pri-a.pri);
+  const chap=Object.values(CH).map(c=>{const pp=PAPER[c.no]||1,qs=DB.questions.filter(q=>q.ch===c.no);let f=0,fn=0,lc=0;
+    qs.forEach(q=>{const h=P.h[q.key];if(h&&h.length){fn++;f+=h[0][2];lc+=h[h.length-1][2]}});
+    return{c,pp,share:PW[pp]*chN[c.no]/paperN[pp],n:chN[c.no],seen:fn,fa:fn?f/fn:null,la:fn?lc/fn:null}});
+  return{g,tg,cg,pr,C,cov,needQ,avgT,mocks,best,score,calibrating,ready,level,weeks,slope,gap,pace,covW,scoreW,etaW,daysLeft,needPace,
+    focus,chap,minP,days,streak:streak(),a7,a7p,f7,f7p,prev:predict(now-7*DAY),paceS,mockS}}
+function recs(I){const R=[],P1=I.pr.paper[1],P2=I.pr.paper[2],tg=I.tg,f=I.focus.filter(x=>x.pri>0).slice(0,3);
+  if(I.calibrating)R.push(['Calibrate first',`Answer about ${50-I.C.seen} more <b>new</b> questions across both papers (mixed topics) so the tracker has enough to read you. Until then, treat the numbers as a rough guide.`]);
+  if(I.needQ&&I.needPace!=null){const cur=I.pace;if(cur<I.needPace)R.push(['Increase new-question pace',`To see ${I.g.cover}% of every chapter before ${new Date(I.g.date).toLocaleDateString()} you need about <b>${Math.ceil(I.needPace)} new questions/day</b>; you're averaging ${cur.toFixed(1)}/day over the last 14 days. Pick "Unanswered" in New session.`]);
+    else R.push(['Pace is on track',`You're averaging ${cur.toFixed(1)} new questions/day; ${Math.ceil(I.needPace)}/day is enough to reach your coverage goal by exam day.`])}
+  if(!I.calibrating&&Math.abs(P1-P2)>=.07){const w=P1<P2?1:2;R.push([`Bring Paper ${w} up`,`Paper ${w} is predicted at ${Math.round(100*I.pr.paper[w])}% versus ${Math.round(100*I.pr.paper[w===1?2:1])}% for Paper ${w===1?2:1}. You need a minimum in <b>each</b> paper to pass, so give Paper ${w} roughly two out of every three sessions until they're level.`])}
+  if(f.length&&!I.calibrating)R.push(['Where the marks are',`Biggest gains: ${f.map(x=>`<b>${esc(x.t.section)}</b> (~${x.pri.toFixed(1)} marks)`).join(', ')}. These are large parts of the exam where you're below target or haven't been tested. Use the Practise buttons below.`]);
+  if(I.C.wl>=25){const fr=I.C.retried?I.C.fixed/I.C.retried:null;R.push(['Clear the mistakes backlog',`${I.C.wl} questions are still wrong on your latest try.${fr!=null?` When you re-attempt a wrong question you get it right ${Math.round(100*fr)}% of the time.`:''} ${fr!=null&&fr<.6?'That fix rate is low, so the concept may not be landing. Send them to Google Drive and go through the explanations with Claude.':'Run "Revise my mistakes" in short blocks.'}`])}
+  if(I.C.stuck>=5)R.push(['Stubborn questions',`${I.C.stuck} questions you've got wrong at least twice. These are concept gaps, not slips. Write a one-line note on each, or go through them with Claude.`]);
+  if(I.C.slipped>=5)R.push(['Things are slipping',`${I.C.slipped} questions you once got right are now wrong. Re-attempt your wrong questions on a 1-, 3- and 7-day rhythm rather than all at once.`]);
+  if(I.C.tn>=30&&I.avgT>70)R.push(['Speed up',`You average ${Math.round(I.avgT)} s per question, but the exam gives you 60 s. Do some sessions in Timed exam mode, or practice with the "60 s per question" timer.`]);
+  if(I.C.seen>=300&&!I.mocks.length)R.push(['Benchmark under exam conditions','You haven\'t done a timed mock yet. Do the 60-question mini mock. It tells you more about readiness than untimed practice.']);
+  else if(I.mocks.length&&I.best<tg)R.push(['Mock score',`Your best timed mock so far is ${Math.round(100*I.best)}%, below your ${I.g.target}% target. Repeat a mini mock every 2–3 weeks to track this.`]);
+  let act=0;for(let i=0;i<14;i++){const d=new Date();d.setDate(d.getDate()-i);if(I.days.has(day(d)))act++}
+  if(I.C.seen&&act<8)R.push(['Consistency',`You studied on ${act} of the last 14 days. Short daily sessions (even 15–20 questions) beat occasional long ones for retention.`]);
+  if(I.slope!=null&&I.slope>.003)R.push(['You are improving',`Your predicted score is rising by about <b>${(100*I.slope).toFixed(1)} points/week</b>. Keep going.`]);
+  else if(I.slope!=null&&I.slope<-.003)R.push(['Trend is dipping',`Your predicted score fell about ${(100*-I.slope).toFixed(1)} points/week recently. That often happens when you move into new, harder chapters, but check that your mistake review is keeping up.`]);
+  return R}
+// ---- charts (plain SVG, matching the app's look)
+function gauge(v,lbl,muted){const R=80,cx=100,cy=96,a=x=>Math.PI*(1-x/100),pt=(x,r)=>[cx+r*Math.cos(a(x)),cy-r*Math.sin(a(x))];
+  const arc=(x0,x1,c)=>{const[p,q]=[pt(x0,R),pt(x1,R)];return `<path d="M${p[0].toFixed(1)} ${p[1].toFixed(1)} A${R} ${R} 0 0 1 ${q[0].toFixed(1)} ${q[1].toFixed(1)}" stroke="${c}" stroke-width="14" fill="none"/>`};
+  const n=pt(clamp(v,0,100),R-24);
+  return `<svg viewBox="0 0 200 136" width="100%" style="max-width:280px;display:block;margin:0 auto" role="img" aria-label="Exam readiness ${v} of 100, ${lbl}">
+   ${arc(0,39.5,'#e8a29c')}${arc(40.5,64.5,'#ecc27a')}${arc(65.5,84.5,'#a9d6ab')}${arc(85.5,100,'var(--ok)')}
+   ${muted?'':`<line x1="${cx}" y1="${cy}" x2="${n[0].toFixed(1)}" y2="${n[1].toFixed(1)}" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="6" fill="var(--ink)"/>`}
+   <text x="${cx}" y="${cy+34}" text-anchor="middle" style="font-size:24px;font-weight:800;fill:var(--ink)">${muted?'–':v}</text></svg>`}
+function scoreScale(I){const lo=40,hi=90,X=v=>100*(clamp(v,lo,hi)-lo)/(hi-lo),tg=I.g.target;
+  const row=(name,p,se)=>{const v=100*p,e=196*se;return `<div style="display:flex;align-items:center;gap:10px;margin:10px 0"><div style="width:74px" class="small b">${name}</div>
+   <div style="flex:1;position:relative;height:22px;background:var(--line);border-radius:4px" title="${name}: predicted ${Math.round(v)}% (likely range ${Math.round(v-e)}–${Math.round(v+e)}%)">
+    <div style="position:absolute;left:${X(65)}%;width:${X(77)-X(65)}%;top:0;bottom:0;background:var(--accs)"></div>
+    <div style="position:absolute;left:${X(tg)}%;top:-3px;bottom:-3px;border-left:2px dashed var(--acc)"></div>
+    <div style="position:absolute;left:${X(v-e)}%;width:${Math.max(1,X(v+e)-X(v-e))}%;top:9px;height:4px;background:var(--mute);opacity:.5;border-radius:2px"></div>
+    <div style="position:absolute;left:calc(${X(v)}% - 7px);top:4px;width:14px;height:14px;border-radius:7px;background:${accColor(v)};border:2px solid var(--card)"></div></div>
+   <div style="width:46px;text-align:right" class="b">${Math.round(v)}%</div></div>`};
+  return row('Overall',I.pr.overall,I.pr.se)+row('Paper 1',I.pr.paper[1],I.pr.se*1.25)+row('Paper 2',I.pr.paper[2],I.pr.se*1.5)+
+   `<div class="legend"><span><i style="background:var(--accs)"></i>usual pass-mark range 65–77%</span><span><i style="border:0;border-left:2px dashed var(--acc);border-radius:0"></i>your target ${tg}%</span><span><i style="background:var(--mute);opacity:.5"></i>likely range</span></div>`}
+function trendSvg(I){const W=900,H=170,L=34,pts=I.weeks,n=pts.length,bw=(W-L)/n,ys=pts.filter(w=>w.p!=null).map(w=>100*w.p);
+  if(ys.length<2)return '<div class="empty">The trend line appears after two weeks with at least 20 answered questions.</div>';
+  const lo=Math.max(0,Math.floor(Math.min(...ys,I.g.target)/10)*10-10),hi=Math.min(100,Math.ceil(Math.max(...ys,I.g.target)/10)*10+5),Y=v=>H-(v-lo)/(hi-lo)*H,Xc=i=>L+i*bw+bw/2;
+  let s=`<svg viewBox="0 0 ${W} ${H+24}" width="100%" role="img" aria-label="Predicted exam score by week">`;
+  for(let v=lo;v<=hi;v+=10)s+=`<line x1="${L}" x2="${W}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
+  s+=`<line x1="${L}" x2="${W}" y1="${Y(I.g.target)}" y2="${Y(I.g.target)}" stroke="var(--acc)" stroke-width="1.5" stroke-dasharray="6 5"/><text x="${W-4}" y="${Y(I.g.target)-6}" text-anchor="end" style="fill:var(--acc)">target ${I.g.target}%</text>`;
+  let d='';pts.forEach((w,i)=>{if(w.p!=null)d+=(d?'L':'M')+Xc(i).toFixed(1)+' '+Y(100*w.p).toFixed(1)});
+  s+=`<path d="${d}" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linejoin="round"/>`;
+  pts.forEach((w,i)=>{const lab=new Date(w.end).toLocaleDateString(undefined,{day:'numeric',month:'short'});
+    if(w.p!=null)s+=`<g><circle cx="${Xc(i)}" cy="${Y(100*w.p)}" r="4.5" fill="var(--navy)" stroke="var(--card)" stroke-width="2"/><rect x="${Xc(i)-bw/2}" y="0" width="${bw}" height="${H}" fill="transparent"><title>Week ending ${lab}: predicted ${Math.round(100*w.p)}% · ${w.q} answers${w.fa!=null?` · ${Math.round(100*w.fa)}% right first time on ${w.nf} new questions`:''}</title></rect></g>`;
+    if(i%2===1||i===n-1)s+=`<text x="${Xc(i)}" y="${H+16}" text-anchor="middle">${lab}</text>`});
+  const last=pts[n-1];if(last.p!=null)s+=`<text x="${Xc(n-1)-8}" y="${Y(100*last.p)-10}" text-anchor="end" style="fill:var(--ink);font-weight:700">${Math.round(100*last.p)}%</text>`;
+  return s+'</svg>'}
+function volSvg(I){const W=900,H=70,L=34,T0=16,pts=I.weeks,n=pts.length,bw=(W-L)/n,mx=Math.max(20,...pts.map(w=>w.q));
+  let s=`<svg viewBox="0 -${T0} ${W} ${H+T0+6}" width="100%" role="img" aria-label="Questions answered per week">`;
+  pts.forEach((w,i)=>{const h=H*w.q/mx,lab=new Date(w.end).toLocaleDateString(undefined,{day:'numeric',month:'short'});
+    s+=`<rect x="${L+i*bw+bw*.2}" y="${H-h}" width="${bw*.6}" height="${Math.max(h,0)}" rx="3" fill="var(--acc)" opacity=".75"><title>Week ending ${lab}: ${w.q} answers</title></rect>`;
+    if(w.q)s+=`<text x="${L+i*bw+bw/2}" y="${H-h-4}" text-anchor="middle">${w.q}</text>`});
+  return s+`<line x1="${L}" x2="${W}" y1="${H}" y2="${H}" stroke="var(--line)"/></svg>`}
+function delta(a,b,unit,dec){if(a==null||b==null)return '';const d=a-b;if(Math.abs(d)<(dec?.05:.5))return `<span class="mute small">± 0${unit}</span>`;
+  return `<span class="small b" style="color:${d>0?'var(--okd)':'var(--bad)'}">${d>0?'▲':'▼'} ${Math.abs(d).toFixed(dec||0)}${unit}</span>`}
+function wks(w){if(w==null)return '–';if(w<=0)return 'now';if(w<6)return Math.ceil(w)+' week'+(Math.ceil(w)>1?'s':'');const m=w/4.345;return (m<10?m.toFixed(1):Math.round(m))+' months'}
+function milestones(I){const M=[[`100 questions`,I.C.seen>=100],[`500 questions`,I.C.seen>=500],[`1,000 questions`,I.C.seen>=1000],[`Half the bank`,I.C.seen>=BANK_N/2],[`Whole bank`,I.C.seen>=BANK_N],
+  ['7-day streak',I.streak>=7],['30-day streak',I.streak>=30],['First timed mock',I.mocks.length>0],[`Mock ≥ ${I.g.target}%`,I.best>=I.tg],
+  [`Paper 1 ≥ ${I.g.target}%`,!I.calibrating&&I.pr.paper[1]>=I.tg],[`Paper 2 ≥ ${I.g.target}%`,!I.calibrating&&I.pr.paper[2]>=I.tg],['Exam ready',I.ready]];
+  return `<div class="row" style="gap:8px">${M.map(([l,ok])=>`<span class="pill ${ok?'g':''}" style="${ok?'':'background:var(--opt);color:var(--mute)'};padding:4px 10px">${ok?'✓ ':''}${l}</span>`).join('')}</div>`}
+function ready(){
+  const I=intel(),g=I.g,C=I.C,R=recs(I),lvlC=I.ready?'var(--okd)':I.score>=65?'#3f8a4a':I.score>=40?'#9a5b00':'var(--bad)';
+  const etaTxt=I.calibrating?'Need more data':I.etaW==null?'No trend yet':wks(I.etaW);
+  const weeksLeft=I.daysLeft/7,onTrack=I.etaW!=null&&I.etaW<=weeksLeft;
+  let h=`<div class="row" style="margin-bottom:16px"><h1 style="margin:0">Exam readiness</h1><span class="sp"></span><button class="btn sm" data-act="rcopy" ${C.seen?'':'disabled'}>Copy report for Claude</button></div>
+  <div class="grid2"><div class="card" style="text-align:center"><h2 style="text-align:left">Readiness meter</h2>${gauge(I.score,I.level,!C.seen)}
+    <div class="b" style="font-size:18px;color:${lvlC};margin-top:2px">${C.seen?I.level:'Not started'}</div>
+    <div class="mute small" style="margin-top:4px">${I.calibrating?`Calibrating: ${C.seen}/50 questions answered. Treat this as a rough guide for now.`:`Score ${I.score}/100. The meter combines predicted score, how weak your weaker paper is, coverage, and pace/mocks.`}</div>
+    <div class="legend" style="justify-content:center"><span><i style="background:#e8a29c"></i>0–39 foundations</span><span><i style="background:#ecc27a"></i>40–64 developing</span><span><i style="background:#a9d6ab"></i>65–84 approaching</span><span><i style="background:var(--ok)"></i>85+ ready</span></div></div>
+   <div class="card"><h2>Time to exam-ready</h2><div class="big" style="font-size:38px">${etaTxt}</div>
+    <div class="mute small" style="margin:6px 0 12px">${I.etaW!=null&&I.etaW>0?'≈ '+new Date(Date.now()+I.etaW*7*DAY).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})+' at your current rate':I.etaW===0?'You meet your score and coverage goals.':I.calibrating?'Answer at least 50 questions.':'Needs about 3 weeks of data to measure your rate of improvement.'}</div>
+    <table><tr><td>Exam date</td><td class="n">${new Date(g.date).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})} · ${Math.round(weeksLeft)} weeks away</td></tr>
+     <tr><td>Score: closing the gap</td><td class="n">${I.gap<=0?'<span class="pill g">at target</span>':I.scoreW==null?`${(100*I.gap).toFixed(1)} pts to go · trend not rising yet`:`${(100*I.gap).toFixed(1)} pts · ${wks(I.scoreW)}`}</td></tr>
+     <tr><td>Coverage: ${g.cover}% of each chapter</td><td class="n">${I.needQ?`${I.needQ} new Q to go · ${I.covW==null?'not started':wks(I.covW)}`:'<span class="pill g">done</span>'}</td></tr>
+     <tr><td>Status</td><td class="n">${I.calibrating?'–':I.ready?'<span class="pill g">Ready</span>':onTrack?'<span class="pill g">On track</span>':`<span class="pill r">Behind</span>${I.needPace?` · need ${Math.ceil(I.needPace)} new Q/day`:''}`}</td></tr></table></div></div>
+  <div class="card"><h2>Predicted exam score</h2>${C.seen?scoreScale(I):'<div class="empty">Answer some questions to see a prediction.</div>'}
+   <div class="mute small" style="margin-top:8px">Based on your <b>first attempt</b> at each question (that's what the exam gives you), weighted towards the last 3 weeks and scaled by how much of the exam each chapter covers. The real pass mark changes with every sitting.</div></div>
+  <div class="card"><h2>Question tracker</h2><div class="grid4">
+   ${[[C.seen.toLocaleString(),`attempted of ${BANK_N.toLocaleString()} (${pct(C.seen,BANK_N)}%)`],[(BANK_N-C.seen).toLocaleString(),'not yet attempted'],
+     [`<span style="color:var(--okd)">${C.cl}</span>`,'right (latest try)'],[`<span style="color:var(--bad)">${C.wl}</span>`,'wrong (latest try)'],
+     [C.seen?pct(C.fc,C.seen)+'%':'–','right first time'],[C.skipU,`left blank in exams${C.skipI>C.skipU?` (${C.skipI} times)`:''}`],
+     [C.retried?pct(C.fixed,C.retried)+'%':'–',`fixed on re-attempt (${C.fixed}/${C.retried})`],[C.slipped,'slipped (right → wrong)'],
+     [C.stuck,'wrong 2+ times, still wrong'],[C.att.toLocaleString(),'total attempts'],[C.tn?Math.round(I.avgT)+' s':'–',`per question${C.tn?` · ${pct(C.in60,C.tn)}% within 60 s`:''}`],
+     [Object.keys(P.f).length,'flagged']].map(([v,l])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('')}</div></div>
+  <div class="card"><h2>Analysis & recommendations</h2>${R.length?R.map(([t,x],i)=>`<div class="mrow"><div class="b" style="width:26px;color:var(--acc)">${i+1}</div><div class="q"><div class="b">${t}</div><div class="small" style="margin-top:2px">${x}</div></div></div>`).join(''):'<div class="empty">Start answering questions and recommendations will appear here.</div>'}</div>
+  <div class="card"><h2>Focus areas: where marks are being lost</h2><div class="mute small" style="margin:-4px 0 8px">Ranked by estimated exam marks (out of 300) below your target, plus a smaller penalty for parts you haven't tested yet.</div>
+   <table><tr><th>Section</th><th class="n">Seen</th><th class="n">Est. accuracy</th><th class="n">Marks</th><th></th></tr>
+   ${I.focus.slice(0,8).map(x=>`<tr><td>${x.t.section_no} ${esc(x.t.section)}<span class="tag">P${x.pp}</span><div>${x.why.map(([w,c])=>`<span class="pill ${c}" style="margin:3px 4px 0 0">${w}</span>`).join('')}</div></td>
+     <td class="n">${x.s.seen}/${secN[x.t.id]}</td><td class="n">${x.s.seen>=3?`<span class="pill ${x.acc>=I.tg?'g':x.acc>=I.tg-.15?'a':'r'}">${Math.round(100*x.acc)}%</span>`:'<span class="mute">?</span>'}</td>
+     <td class="n">${x.pri.toFixed(1)}</td><td class="n"><button class="btn sm go" data-act="fdrill" data-t="${x.t.id}">Practise 20</button></td></tr>`).join('')}</table></div>
+  <div class="card"><h2>By chapter</h2><table><tr><th>Chapter</th><th class="n">Exam share</th><th class="n">Seen</th><th class="n">1st try</th><th class="n">Latest</th></tr>
+   ${I.chap.sort((a,b)=>b.share-a.share).map(r=>`<tr><td>${r.c.no}. ${esc(r.c.name)}<span class="tag">P${r.pp}</span></td><td class="n">${Math.round(100*r.share)}%</td>
+     <td class="n"><div class="bar hidem" style="width:70px;display:inline-flex;vertical-align:middle;margin-right:6px"><i style="width:${pct(r.seen,r.n)}%;background:var(--acc)"></i></div>${pct(r.seen,r.n)}%</td>
+     <td class="n">${r.fa==null?'–':`<span class="pill ${r.fa>=I.tg?'g':r.fa>=I.tg-.15?'a':'r'}">${Math.round(100*r.fa)}%</span>`}</td><td class="n">${r.la==null?'–':Math.round(100*r.la)+'%'}</td></tr>`).join('')}</table>
+   <div class="mute small" style="margin-top:6px">Exam share is estimated from how many questions each chapter has in the bank.</div></div>
+  <div class="card"><h2>Benchmark: am I improving?</h2><div class="grid4" style="margin-bottom:14px">
+   <div class="kpi"><div class="v">${I.pr.n?Math.round(100*I.pr.overall)+'%':'–'}</div><div class="l">predicted now ${delta(100*I.pr.overall,I.prev.n>=20?100*I.prev.overall:null,' pts',1)} vs 7 days ago</div></div>
+   <div class="kpi"><div class="v">${I.a7}</div><div class="l">answers this week ${delta(I.a7,I.a7p,'')} vs last week</div></div>
+   <div class="kpi"><div class="v">${I.f7[1]?pct(I.f7[0],I.f7[1])+'%':'–'}</div><div class="l">right first time this week ${delta(I.f7[1]?100*I.f7[0]/I.f7[1]:null,I.f7p[1]?100*I.f7p[0]/I.f7p[1]:null,' pts')}</div></div>
+   <div class="kpi"><div class="v">${I.slope==null?'–':(I.slope>=0?'+':'')+(100*I.slope).toFixed(1)}</div><div class="l">points / week trend</div></div></div>
+   <div class="small b" style="margin-bottom:4px">Predicted score by week</div>${trendSvg(I)}
+   <div class="small b" style="margin:12px 0 4px">Questions answered per week</div>${volSvg(I)}
+   ${I.mocks.length?`<div class="small b" style="margin:12px 0 4px">Timed mocks</div><table>${I.mocks.slice(-6).reverse().map(m=>`<tr><td class="small">${new Date(m.s.start).toLocaleDateString()}</td><td>${esc(m.s.name)}</td><td class="n"><span class="pill ${m.p>=I.tg?'g':m.p>=I.tg-.1?'a':'r'}">${Math.round(100*m.p)}%</span></td></tr>`).join('')}</table>`:''}
+   <div class="small b" style="margin:14px 0 6px">Milestones</div>${milestones(I)}</div>
+  <div class="card"><h2>My goal</h2>
+   <div class="field"><label>Exam date</label><div><input type="date" id="gdate" value="${g.date}"><div class="mute small" style="margin-top:4px">Upcoming Part A sittings: 13 Jan 2027 (applications closed 29 Oct 2026), 29 Apr 2027 (apply by 25 Feb 2027).</div></div></div>
+   <div class="field"><label>Target score</label><div><input type="number" id="gtg" min="55" max="90" value="${g.target}"> %<div class="mute small" style="margin-top:4px">Recent pass marks have ranged from about 65% to 77%. Aiming for 72% or more gives you a margin.</div></div></div>
+   <div class="field"><label>Coverage goal</label><div><input type="number" id="gcv" min="20" max="100" value="${g.cover}"> % of each chapter seen before the exam</div></div></div>`;
+  app.innerHTML=h;
+  const sv=()=>{P.goal={date:$('gdate').value||g.date,target:clamp(+$('gtg').value||72,40,95),cover:clamp(+$('gcv').value||60,10,100)};save(true);ready()};
+  ['gdate','gtg','gcv'].forEach(i=>$(i).addEventListener('change',sv))}
+function readyMini(){const I=intel();if(!I.C.seen)return `<div class="card row"><div><div class="b">Exam readiness</div><div class="mute small">Answer some questions to start your readiness meter.</div></div><span class="sp"></span><button class="btn" data-act="go" data-v="ready">Open</button></div>`;
+  return `<div class="card row" style="gap:18px"><div style="width:150px">${gauge(I.score,I.level,false)}</div>
+   <div style="flex:1;min-width:200px"><div class="b" style="font-size:17px">${I.level}${I.calibrating?' <span class="mute small">(calibrating)</span>':''}</div>
+   <div class="small" style="margin-top:4px">Predicted <b>${Math.round(100*I.pr.overall)}%</b> (P1 ${Math.round(100*I.pr.paper[1])}% · P2 ${Math.round(100*I.pr.paper[2])}%) · target ${I.g.target}%</div>
+   <div class="small mute">Exam-ready in: <b style="color:var(--ink)">${I.calibrating?'need more data':I.etaW==null?'no trend yet':wks(I.etaW)}</b> · top focus: ${esc(I.focus[0].t.section)}</div></div>
+   <button class="btn pri" data-act="go" data-v="ready">Full report</button></div>`}
+function reportText(I){const R=recs(I),pc=x=>Math.round(100*x)+'%';
+  return [`# My MRCS Part A readiness report (${new Date().toLocaleString()})`,``,
+   `Please act as my MRCS Part A study coach. Use this data to (1) tell me honestly how exam-ready I am, (2) build a week-by-week plan up to my exam date, `+
+   `(3) for my top weak sections, list the high-yield concepts I should review, and (4) suggest how many questions a day I should do. Use mostly clinical terms and cite sources where relevant.`,``,
+   `## Goal`,`- Exam date: ${I.g.date} (${Math.round(I.daysLeft)} days away) · target ${I.g.target}% · coverage goal ${I.g.cover}% of each chapter`,``,
+   `## Headline`,`- Readiness: ${I.score}/100 (${I.level})${I.calibrating?' — still calibrating':''}`,
+   `- Predicted score: overall ${pc(I.pr.overall)} (±${Math.round(196*I.pr.se)}), Paper 1 ${pc(I.pr.paper[1])}, Paper 2 ${pc(I.pr.paper[2])}`,
+   `- Trend: ${I.slope==null?'not enough data':(100*I.slope).toFixed(1)+' points/week'} · estimated time to ready: ${I.calibrating?'need more data':wks(I.etaW)}`,``,
+   `## Counts`,`- Attempted ${I.C.seen}/${BANK_N} · right (latest) ${I.C.cl} · wrong (latest) ${I.C.wl} · right first time ${pct(I.C.fc,I.C.seen)}%`,
+   `- Left blank in exams ${I.C.skipU} · fixed on re-attempt ${I.C.fixed}/${I.C.retried} · slipped ${I.C.slipped} · wrong 2+ times ${I.C.stuck}`,
+   `- Avg ${Math.round(I.avgT)} s/question · ${I.a7} answers this week (last week ${I.a7p}) · streak ${I.streak} days · ${I.pace.toFixed(1)} new Q/day (14-day avg)`,
+   `- Timed mocks: ${I.mocks.length?I.mocks.map(m=>day(m.s.start)+' '+pc(m.p)).join(', '):'none yet'}`,``,
+   `## By chapter (exam share · seen · first-try · latest)`,...I.chap.map(r=>`- ${r.c.no}. ${r.c.name} [P${r.pp}] · ${pc(r.share)} · ${pct(r.seen,r.n)}% · ${r.fa==null?'–':pc(r.fa)} · ${r.la==null?'–':pc(r.la)}`),``,
+   `## Top focus sections (est. marks lost of 300)`,...I.focus.slice(0,10).map(x=>`- ${x.t.section_no} ${x.t.section} (${x.t.chapter}) · seen ${x.s.seen}/${secN[x.t.id]} · est. ${pc(x.acc)} · ${x.pri.toFixed(1)} marks${x.why.length?' · '+x.why.map(w=>w[0]).join(', '):''}`),``,
+   `## App's own recommendations`,...R.map(([t,x])=>`- ${t}: ${x.replace(/<[^>]+>/g,'')}`)].join('\n')}
+// ---------------------------------------------------------------- flagged & notes
+function flagged(){
+  const keys=[...new Set([...Object.keys(P.f),...Object.keys(P.notes)])].filter(k=>QK[k]).sort();
+  let h=`<h1>Flagged & notes</h1><div class="card">`;
+  if(!keys.length)h+='<div class="empty">Nothing yet. Flag questions (F) or write notes under an explanation, and they will be collected here.</div>';
+  else h+=`<div class="row" style="margin-bottom:12px"><button class="btn go" data-act="quick" data-k="flag" ${Object.keys(P.f).length?'':'disabled'}>Practise flagged (${Object.keys(P.f).length})</button></div><table><tr><th>Question</th><th>Note</th><th></th></tr>`+
+    keys.map(k=>{const q=QK[k];return `<tr><td style="width:45%"><span class="mute small">${T[q.t].section_no} ${esc(T[q.t].section)}${P.f[k]?' · <span style="color:var(--flag)">⚑ flagged</span>':''}</span><br>${esc((q.lead||q.stem).slice(0,140))}</td><td class="small">${esc(P.notes[k]||'')}</td><td class="n"><button class="btn sm" data-act="one" data-k="${k}">Open</button></td></tr>`}).join('')+'</table>';
+  app.innerHTML=h+'</div>'}
+// ---------------------------------------------------------------- actions
+const ACT={
+  go:d=>go(d.v), resume, discard:()=>{if(!confirm('Discard the unfinished session? Answers already submitted stay in your stats.'))return;
+    P.sessions=P.sessions.filter(s=>s.id!==P.cur);P.cur=null;save(true);go('dash')},
+  resumeid:d=>{P.cur=d.id;resume()}, openres:d=>go('results',d.id),
+  delsess:d=>{if(!confirm('Delete this session from history? Your answer statistics are kept.'))return;P.sessions=P.sessions.filter(s=>s.id!==d.id);if(P.cur===d.id)P.cur=null;save(true);history()},
+  quick:d=>{const cur=P.sessions.find(s=>s.id===P.cur&&!s.done);if(cur&&!confirm('You have an unfinished session. Start a new one anyway? (It stays in History.)'))return;quick(d.k)},
+  cfg:d=>{cfg[d.k]=isNaN(+d.val)?d.val:+d.val;saveCfg();build()},
+  selp:d=>{const p=+d.p;cfg.sel=p<0?[]:DB.topics.filter(t=>!p||(PAPER[t.chapter_no]||1)===p).map(t=>t.id);saveCfg();build()},
+  selch:(d,e)=>{const on=e.target.checked,s=new Set(cfg.sel);CH[d.c].secs.forEach(t=>on?s.add(t.id):s.delete(t.id));cfg.sel=[...s];saveCfg();build()},
+  selsec:(d,e)=>{const s=new Set(cfg.sel);e.target.checked?s.add(+d.t):s.delete(+d.t);cfg.sel=[...s];saveCfg();availCount()},
+  tog:d=>{const c=+d.c;openCh.has(c)?openCh.delete(c):openCh.add(c);build()},
+  start:()=>{const cur=P.sessions.find(s=>s.id===P.cur&&!s.done);if(cur&&!confirm('You have an unfinished session. Start a new one anyway? (It stays in History.)'))return;startFromCfg()},
+  pick:(d,e)=>{if(e.target.closest('.x'))return;pick(d.l)}, strike:(d,e)=>{e.stopPropagation();strike(d.l)},
+  submit, mv:d=>mv(+d.d), jump:d=>{S.i=+d.i;save();quiz()}, flag, endask:endAsk,
+  pause:()=>{S.paused=!S.paused;lastTick=Date.now();save(true);quiz()},
+  clearhl:()=>{delete S.hl[S.qs[S.i]];save();quiz()},
+  toresults:()=>S.reviewOnly?go('mistakes'):go('results',S.id), rev:d=>{S.i=+d.i;go('quiz')},
+  retry:()=>{const keys=S.qs.filter(k=>S.ans[k]!==QK[k]?.ans);newSession(shuffle(keys),{name:'Retry: '+S.name.replace(/^Retry: /,''),mode:'practice',timer:'up'})},
+  psort:d=>{perfSort=d.s;perf()}, drill:d=>{cfg.sel=[+d.t];cfg.pool='all';cfg.kw='';saveCfg();go('build')},
+  export:exportP, import:()=>$('impf').click(),
+  reset:()=>{if(!confirm('Erase all answers, flags, notes and history? This cannot be undone (export first if unsure).'))return;P={h:{},f:{},notes:{},sessions:[],cur:null,cfg:P.cfg,goal:P.goal,m:{},exp:0};save(true);perf()},
+  one:d=>newSession([d.k],{name:'Single question',mode:'practice',timer:'up'}),
+  mf:d=>{mf[d.k]=d.val;mistakes()}, master:d=>{P.m[d.k]=Date.now();save(true);mistakes()},
+  mpractise:()=>{const L=mistakeList();newSession(shuffle(L.map(x=>x.k)),{name:'Mistakes review',mode:'practice',timer:'up'})},
+  mexport, mcopy,
+  mreview:()=>{const L=mistakeList();if(L.length)reviewOnly(L,'Review: wrong questions')},
+  rone:d=>{const x=mistakeList().find(y=>y.k===d.k)||{k:d.k,lw:[0,(last(d.k)||[])[1]]};reviewOnly([x],'Review: one question')},
+  dsave:()=>{const url=$('durl').value.trim(),token=$('dtok').value.trim();
+    if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)){toast('That does not look like a Google Apps Script link');return}
+    P.drive={url,token};save(true);toast('Google Drive connected');mistakes()},
+  dforget:()=>{P.drive={url:'',token:''};save(true);mistakes()},
+  dup:driveUpload,
+  fdrill:d=>{const t=+d.t,qs=DB.questions.filter(q=>q.t===t),un=shuffle(qs.filter(q=>!last(q.key))),wr=shuffle(qs.filter(q=>{const l=last(q.key);return l&&!l[2]})),rest=shuffle(qs.filter(q=>{const l=last(q.key);return l&&l[2]}));
+    const pickd=un.slice(0,14).concat(wr).concat(un.slice(14)).concat(rest).slice(0,20);if(!pickd.length)return;
+    const cur=P.sessions.find(s=>s.id===P.cur&&!s.done);if(cur&&!confirm('You have an unfinished session. Start a new one anyway? (It stays in History.)'))return;
+    newSession(pickd.map(q=>q.key),{name:'Focus: '+T[t].section,mode:'practice',timer:'up'})},
+  rcopy:async()=>{const txt=reportText(intel());try{await navigator.clipboard.writeText(txt);toast('Report copied — paste it into Claude')}
+    catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('Report copied — paste it into Claude')}},
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||el.disabled)return;
+  if(el.tagName==='INPUT'&&el.type==='checkbox'&&e.type==='click'){ACT[el.dataset.act]&&ACT[el.dataset.act](el.dataset,e);return}
+  const f=ACT[el.dataset.act];if(f)f(el.dataset,e)});
+document.addEventListener('keydown',e=>{if(view!=='quiz'||!S||/INPUT|TEXTAREA/.test(e.target.tagName)||e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key.toUpperCase(),q=QK[S.qs[S.i]];
+  if(k==='P'&&!S.done){ACT.pause();return}if(S.paused)return;
+  if(q.opts.some(o=>o.l===k)){pick(k);return}
+  if(k==='ENTER'){const kk=S.qs[S.i];if(!S.done&&S.mode==='practice'&&!S.sub[kk])submit();else if(S.i<S.qs.length-1)mv(1);e.preventDefault()}
+  else if(k==='ARROWRIGHT')mv(1);else if(k==='ARROWLEFT')mv(-1);else if(k==='F')flag()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&S&&view==='quiz')save(true)});
+window.addEventListener('beforeunload',()=>save(true));
+// migrate: sessions from older versions had no data; keep answers/flags as they are
+go('dash');
+</script></body></html>
